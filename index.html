@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grace Life Hospital | Jonesboro, AR</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--navy:#0a1f35;--blue:#1a5a8a;--mid:#2e7eb5;--sky:#5aafd4;--light:#eaf4fb;--gold:#c9a84c;--gold2:#f0d080;--white:#ffffff;--off:#f5f8fc;--text:#0e1e2e;--muted:#5a7a95;--border:#d0e4f0}
+    html{scroll-behavior:smooth}
+    body{font-family:"Outfit",sans-serif;color:var(--text);background:var(--white);overflow-x:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 64px;height:72px;background:rgba(10,31,53,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,168,76,0.2)}
+    .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .nav-cross{width:36px;height:36px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--navy);font-weight:900;flex-shrink:0}
+    .nav-name{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:var(--white)}
+    .nav-name span{color:var(--gold)}
+    .nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+    .nav-links a{color:rgba(255,255,255,0.72);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
+    .nav-links a:hover{color:var(--gold)}
+    .nav-cta{background:var(--gold)!important;color:var(--navy)!important;padding:9px 22px!important;border-radius:4px;font-weight:600!important}
+    .hero{min-height:100vh;background:var(--navy);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding-top:72px;position:relative;overflow:hidden}
+    .hero::after{content:"";position:absolute;top:0;right:0;bottom:0;width:50%;background:linear-gradient(135deg,#0d3358 0%,#1a5a8a 60%,#2e7eb5 100%);clip-path:polygon(8% 0,100% 0,100% 100%,0 100%)}
+    .hero-left{padding:80px 64px;z-index:1}
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);color:var(--gold);font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;padding:7px 16px;border-radius:30px;margin-bottom:32px}
+    .hero h1{font-family:"Cormorant Garamond",serif;font-size:clamp(46px,5.5vw,74px);font-weight:700;color:var(--white);line-height:1.06;margin-bottom:24px}
+    .hero h1 em{color:var(--gold);font-style:normal}
+    .hero-desc{font-size:16px;color:rgba(255,255,255,0.62);line-height:1.8;max-width:420px;margin-bottom:44px;font-weight:300}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:4px;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.25s;cursor:pointer;border:none}
+    .btn-gold{background:var(--gold);color:var(--navy)}
+    .btn-gold:hover{background:var(--gold2);box-shadow:0 8px 28px rgba(201,168,76,0.35);transform:translateY(-2px)}
+    .btn-ghost{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.28)}
+    .btn-ghost:hover{border-color:rgba(255,255,255,0.65);background:rgba(255,255,255,0.06)}
+    .hero-right{z-index:2;padding:80px 64px 80px 72px}
+    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .hstat{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:28px 24px;transition:all 0.3s}
+    .hstat:hover{background:rgba(255,255,255,0.1);transform:translateY(-4px)}
+    .hstat-num{font-family:"Cormorant Garamond",serif;font-size:44px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:6px}
+    .hstat-label{font-size:13px;color:rgba(255,255,255,0.52);line-height:1.4}
+    .ticker{background:var(--gold);overflow:hidden;padding:13px 0}
+    .ticker-inner{display:inline-flex;gap:56px;animation:scroll 24s linear infinite}
+    .ticker span{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:1px;text-transform:uppercase}
+    .ticker span::before{content:"+ "}
+    @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .about{padding:110px 64px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--mid);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+    .eyebrow::before{content:"";width:28px;height:2px;background:var(--gold);display:block}
+    .sec-h{font-family:"Cormorant Garamond",serif;font-size:clamp(30px,3.5vw,46px);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:20px}
+    .sec-p{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:14px;font-weight:300}
+    .feats{display:flex;flex-direction:column;gap:16px;margin-top:32px}
+    .feat{display:flex;align-items:flex-start;gap:16px}
+    .feat-ic{width:40px;height:40px;background:var(--light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .feat-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:3px}
+    .feat-text{font-size:13px;color:var(--muted);line-height:1.6}
+    .card-stack{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .acard{background:var(--navy);border-radius:12px;padding:28px 22px;transition:transform 0.3s}
+    .acard:hover{transform:translateY(-5px)}
+    .acard-big{grid-column:1/-1;background:linear-gradient(135deg,var(--blue),var(--mid))}
+    .acard-icon{font-size:26px;margin-bottom:14px}
+    .acard-title{font-family:"Cormorant Garamond",serif;font-size:18px;color:var(--white);font-weight:600;margin-bottom:6px}
+    .acard-text{font-size:12px;color:rgba(255,255,255,0.52);line-height:1.6}
+    .acard-num{font-family:"Cormorant Garamond",serif;font-size:34px;color:var(--gold);font-weight:700;margin-top:12px}
+    .services{padding:110px 64px;background:var(--off)}
+    .svc-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:20px}
+    .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .scard{background:var(--white);border-radius:10px;padding:36px 28px;border:1px solid var(--border);transition:all 0.3s;position:relative;overflow:hidden}
+    .scard::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--sky));transform:scaleX(0);transform-origin:left;transition:transform 0.35s}
+    .scard:hover{transform:translateY(-8px);box-shadow:0 24px 56px rgba(26,90,138,0.12);border-color:transparent}
+    .scard:hover::after{transform:scaleX(1)}
+    .scard-ic{width:56px;height:56px;background:var(--light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px;transition:background 0.3s}
+    .scard:hover .scard-ic{background:var(--blue)}
+    .scard-title{font-family:"Cormorant Garamond",serif;font-size:22px;color:var(--navy);font-weight:600;margin-bottom:10px}
+    .scard-text{font-size:13.5px;color:var(--muted);line-height:1.75}
+    .scard-link{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:13px;font-weight:600;color:var(--blue);text-decoration:none;transition:gap 0.2s}
+    .scard-link:hover{gap:10px}
+    .emerg{background:linear-gradient(135deg,#8b1a1a,#c0392b);padding:0 64px;display:flex;align-items:stretch}
+    .emerg-left{padding:52px 60px 52px 0;border-right:1px solid rgba(255,255,255,0.15);flex:1}
+    .emerg-right{padding:52px 0 52px 60px;display:flex;flex-direction:column;justify-content:center}
+    .emerg-label{font-size:11px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.55);text-transform:uppercase;margin-bottom:10px}
+    .emerg-title{font-family:"Cormorant Garamond",serif;font-size:30px;color:var(--white);font-weight:700;margin-bottom:8px}
+    .emerg-text{font-size:14px;color:rgba(255,255,255,0.68);line-height:1.7;max-width:400px}
+    .emerg-num{font-family:"Cormorant Garamond",serif;font-size:48px;font-weight:700;color:var(--white);letter-spacing:1px;margin-bottom:6px}
+    .emerg-sub{font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase}
+    .team{padding:90px 64px;background:var(--navy);text-align:center}
+    .team .eyebrow{justify-content:center;color:var(--sky)}
+    .team .eyebrow::before{background:var(--gold)}
+    .team .sec-h{color:var(--white)}
+    .team .sec-p{color:rgba(255,255,255,0.52);max-width:500px;margin:0 auto 48px}
+    .docs{display:flex;justify-content:center;gap:28px;flex-wrap:wrap}
+    .doc{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:30px 24px;width:195px;transition:all 0.3s}
+    .doc:hover{background:rgba(255,255,255,0.1);transform:translateY(-6px)}
+    .doc-av{width:64px;height:64px;background:linear-gradient(135deg,var(--blue),var(--mid));border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:26px}
+    .doc-name{font-family:"Cormorant Garamond",serif;font-size:16px;color:var(--white);font-weight:600;margin-bottom:4px}
+    .doc-spec{font-size:11.5px;color:var(--sky)}
+    .contact{padding:110px 64px;background:var(--white)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:64px;margin-top:56px;align-items:start}
+    .ci-list{display:flex;flex-direction:column;gap:30px}
+    .ci{display:flex;gap:18px;align-items:flex-start}
+    .ci-ic{width:48px;height:48px;background:var(--light);border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
+    .ci-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mid);margin-bottom:5px}
+    .ci-val{font-size:15px;color:var(--navy);font-weight:500;line-height:1.55}
+    .ci-val a{color:var(--blue);text-decoration:none}
+    .ci-val a:hover{text-decoration:underline}
+    .ci-note{font-size:12px;color:var(--muted);margin-top:3px}
+    .map-box{border-radius:12px;overflow:hidden;box-shadow:0 16px 56px rgba(26,90,138,0.14);border:1px solid var(--border);height:440px}
+    .map-box iframe{width:100%;height:100%;border:none;display:block}
+    .map-cap{margin-top:10px;font-size:12px;color:var(--muted)}
+    .map-cap::before{content:"Location: "}
+    footer{background:#060f1a;padding:64px 64px 32px}
+    .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+    .foot-logo{font-family:"Cormorant Garamond",serif;font-size:22px;color:var(--white);font-weight:700;margin-bottom:14px}
+    .foot-logo span{color:var(--gold)}
+    .foot-desc{font-size:13px;color:rgba(255,255,255,0.36);line-height:1.8;margin-bottom:20px}
+    .foot-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);color:var(--gold);font-size:11px;font-weight:600;padding:6px 14px;border-radius:30px}
+    .foot-col h4{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:18px}
+    .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .foot-col a{font-size:13px;color:rgba(255,255,255,0.42);text-decoration:none;transition:color 0.2s}
+    .foot-col a:hover{color:var(--white)}
+    .foot-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+    .foot-copy{font-size:12px;color:rgba(255,255,255,0.2)}
+    .foot-hipaa{font-size:11px;color:rgba(255,255,255,0.18)}
+    .fade-in{opacity:0;transform:translateY(22px);transition:opacity 0.65s,transform 0.65s}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
+
+    /* CHAT */
+    #chat-btn{position:fixed;bottom:28px;right:28px;z-index:9999;width:62px;height:62px;border-radius:50%;background:var(--blue);border:none;cursor:pointer;box-shadow:0 6px 24px rgba(26,90,138,0.45);display:flex;align-items:center;justify-content:center;transition:all 0.3s}
+    #chat-btn:hover{background:var(--mid);transform:scale(1.08)}
+    #chat-btn.open{background:#c0392b}
+    .pulse{position:absolute;top:2px;right:2px;width:14px;height:14px;background:#2ecc71;border-radius:50%;border:2px solid white}
+    .pulse::after{content:"";position:absolute;inset:-3px;border-radius:50%;background:rgba(46,204,113,0.35);animation:pulse-anim 1.8s ease-out infinite}
+    @keyframes pulse-anim{0%{transform:scale(1);opacity:1}100%{transform:scale(2.2);opacity:0}}
+    #chat-win{position:fixed;bottom:104px;right:28px;z-index:9998;width:370px;height:540px;background:var(--white);border-radius:16px;box-shadow:0 20px 64px rgba(10,31,53,0.25);display:flex;flex-direction:column;overflow:hidden;transform:scale(0.85) translateY(20px);opacity:0;pointer-events:none;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);transform-origin:bottom right}
+    #chat-win.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+    .chat-head{background:linear-gradient(135deg,var(--navy),var(--blue));padding:16px 18px;display:flex;align-items:center;gap:12px}
+    .chat-av{width:42px;height:42px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+    .chat-hname{font-weight:700;color:var(--white);font-size:15px}
+    .chat-hstatus{font-size:12px;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:5px}
+    .chat-hstatus::before{content:"";width:7px;height:7px;background:#2ecc71;border-radius:50%;display:inline-block}
+    .chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f8fbfe}
+    .chat-msgs::-webkit-scrollbar{width:4px}
+    .chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+    .msg{max-width:84%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.55;animation:msgIn 0.25s ease}
+    @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .bot{background:var(--white);color:var(--text);border:1px solid var(--border);border-bottom-left-radius:4px;align-self:flex-start;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+    .usr{background:var(--blue);color:var(--white);border-bottom-right-radius:4px;align-self:flex-end}
+    .typing-ind{display:flex;gap:4px;padding:12px 14px;background:var(--white);border:1px solid var(--border);border-radius:14px;border-bottom-left-radius:4px;width:fit-content;align-self:flex-start}
+    .typing-ind span{width:7px;height:7px;background:var(--muted);border-radius:50%;animation:bounce 1.2s infinite}
+    .typing-ind span:nth-child(2){animation-delay:0.2s}
+    .typing-ind span:nth-child(3){animation-delay:0.4s}
+    @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-7px)}}
+    .qrs{display:flex;flex-wrap:wrap;gap:7px;padding:0 14px 10px}
+    .qr{background:var(--white);border:1.5px solid var(--blue);color:var(--blue);font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;cursor:pointer;transition:all 0.2s;font-family:"Outfit",sans-serif}
+    .qr:hover{background:var(--blue);color:var(--white)}
+    .chat-foot{display:flex;align-items:center;gap:8px;padding:12px 14px;border-top:1px solid var(--border);background:var(--white)}
+    #chat-input{flex:1;border:1.5px solid var(--border);border-radius:24px;padding:10px 16px;font-size:13.5px;font-family:"Outfit",sans-serif;outline:none;transition:border 0.2s;color:var(--text);background:var(--off)}
+    #chat-input:focus{border-color:var(--blue)}
+    #send-btn{width:38px;height:38px;background:var(--blue);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s}
+    #send-btn:hover{background:var(--mid)}
+
+    @media(max-width:1024px){nav{padding:0 24px}.hero{grid-template-columns:1fr;padding:110px 28px 60px}.hero::after{display:none}.hero-left,.hero-right{padding:0}.hero-right{margin-top:40px}.about{grid-template-columns:1fr;gap:48px;padding:70px 28px}.services{padding:70px 28px}.svc-grid{grid-template-columns:1fr 1fr}.emerg{flex-direction:column;padding:40px 28px}.emerg-left{border-right:none;border-bottom:1px solid rgba(255,255,255,0.15);padding:0 0 32px}.emerg-right{padding:32px 0 0}.team{padding:70px 28px}.contact{padding:70px 28px}.contact-grid{grid-template-columns:1fr;gap:44px}footer{padding:48px 28px 24px}.foot-grid{grid-template-columns:1fr 1fr;gap:32px}}
+    @media(max-width:600px){.nav-links{display:none}.stats-grid{grid-template-columns:1fr 1fr}.svc-grid{grid-template-columns:1fr}.card-stack{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}#chat-win{width:calc(100vw - 32px);right:16px;bottom:94px}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#home">
+    <div class="nav-cross">+</div>
+    <div class="nav-name">Grace <span>Life</span> Hospital</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#team">Our Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="tel:+19403477005" class="nav-cta">Call Now</a></li>
+  </ul>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-tag">Jonesboro, Arkansas - Est. 2010</div>
+    <h1>Healing with<br/><em>Grace</em> and<br/>Expertise</h1>
+    <p class="hero-desc">Grace Life Hospital delivers compassionate, world-class medical care from routine consultations to complex oncological surgery and emergency response.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-gold">Find Us</a>
+      <a href="#services" class="btn btn-ghost">Our Services</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="stats-grid">
+      <div class="hstat"><div class="hstat-num">15+</div><div class="hstat-label">Years serving Jonesboro</div></div>
+      <div class="hstat"><div class="hstat-num">50+</div><div class="hstat-label">Board-certified specialists</div></div>
+      <div class="hstat"><div class="hstat-num">24/7</div><div class="hstat-label">Emergency care always open</div></div>
+      <div class="hstat"><div class="hstat-num">10k+</div><div class="hstat-label">Patients treated with care</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>Oncology</span><span>Gastroenterology</span><span>General Surgery</span><span>Laboratory and Pathology</span><span>Diagnostic Imaging</span><span>Emergency Care</span><span>Nutritional Support</span><span>Cancer Treatment</span><span>Colonoscopy</span><span>Chemotherapy</span>
+    <span>Oncology</span><span>Gastroenterology</span><span>General Surgery</span><span>Laboratory and Pathology</span><span>Diagnostic Imaging</span><span>Emergency Care</span><span>Nutritional Support</span><span>Cancer Treatment</span><span>Colonoscopy</span><span>Chemotherapy</span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div>
+    <div class="eyebrow">Who We Are</div>
+    <h2 class="sec-h">A Hospital Built on Compassion and Excellence</h2>
+    <p class="sec-p">Grace Life Hospital is a full-service medical facility in the heart of Jonesboro, Arkansas, committed to providing evidence-based, patient-centered care across a wide range of medical disciplines.</p>
+    <p class="sec-p">Our multidisciplinary team collaborates across oncology, gastroenterology, surgical and diagnostic departments to ensure every patient receives the most effective treatment possible.</p>
+    <div class="feats">
+      <div class="feat"><div class="feat-ic">&#127973;</div><div><div class="feat-title">Full-Service Medical Facility</div><div class="feat-text">State-of-the-art surgical theatres, ICU, diagnostic labs and ward facilities.</div></div></div>
+      <div class="feat"><div class="feat-ic">&#127895;</div><div><div class="feat-title">Oncology Centre of Excellence</div><div class="feat-text">Multidisciplinary cancer care from diagnosis through surgery and chemotherapy.</div></div></div>
+      <div class="feat"><div class="feat-ic">&#128274;</div><div><div class="feat-title">HIPAA-Compliant and Confidential</div><div class="feat-text">All patient records and communications are fully protected and confidential.</div></div></div>
+    </div>
+  </div>
+  <div>
+    <div class="card-stack">
+      <div class="acard acard-big"><div class="acard-icon">&#127942;</div><div class="acard-title">Trusted Medical Care in Arkansas</div><div class="acard-text">Serving Jonesboro and surrounding region with commitment to quality outcomes and patient dignity.</div><div class="acard-num">10,000+</div></div>
+      <div class="acard"><div class="acard-icon">&#128300;</div><div class="acard-title">On-Site Lab</div><div class="acard-text">Rapid pathology, CBC, tumor markers and metabolic panels.</div></div>
+      <div class="acard"><div class="acard-icon">&#9877;</div><div class="acard-title">Specialist Team</div><div class="acard-text">50+ board-certified physicians across all major disciplines.</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="svc-head">
+    <div><div class="eyebrow">What We Offer</div><h2 class="sec-h">Our Medical Services</h2></div>
+    <p style="font-size:14px;color:var(--muted);max-width:320px;line-height:1.7;">Comprehensive care delivered by experienced specialists using the latest medical technology.</p>
+  </div>
+  <div class="svc-grid">
+    <div class="scard fade-in"><div class="scard-ic">&#127895;</div><div class="scard-title">Oncology</div><div class="scard-text">Diagnosis, surgical resection, chemotherapy and targeted therapy for colorectal, breast, lung and other cancers.</div><a href="#contact" class="scard-link">Learn more</a></div>
+    <div class="scard fade-in"><div class="scard-ic">&#128300;</div><div class="scard-title">Gastroenterology</div><div class="scard-text">Colonoscopy, endoscopy, biopsy and complete digestive system care by certified gastroenterologists.</div><a href="#contact" class="scard-link">Learn more</a></div>
+    <div class="scard fade-in"><div class="scard-ic">&#127973;</div><div class="scard-title">General Surgery</div><div class="scard-text">Laparoscopic and open procedures in fully equipped operating theatres by our skilled surgical team.</div><a href="#contact" class="scard-link">Learn more</a></div>
+    <div class="scard fade-in"><div class="scard-ic">&#129514;</div><div class="scard-title">Laboratory and Pathology</div><div class="scard-text">Full blood panels, tumor markers, coagulation profiles, biopsy analysis and rapid on-site reporting.</div><a href="#contact" class="scard-link">Learn more</a></div>
+    <div class="scard fade-in"><div class="scard-ic">&#128250;</div><div class="scard-title">Diagnostic Imaging</div><div class="scard-text">CT scans, MRI, PET-CT, X-ray and ultrasound imaging with fast result turnaround.</div><a href="#contact" class="scard-link">Learn more</a></div>
+    <div class="scard fade-in"><div class="scard-ic">&#128680;</div><div class="scard-title">Emergency Care</div><div class="scard-text">24/7 emergency services with a dedicated trauma and critical care team always on standby.</div><a href="tel:+19403477005" class="scard-link">Call now</a></div>
+  </div>
+</section>
+
+<div class="emerg">
+  <div class="emerg-left">
+    <div class="emerg-label">Emergency Services</div>
+    <div class="emerg-title">Need Immediate Medical Attention?</div>
+    <p class="emerg-text">Our emergency team is available around the clock. Do not wait — call us immediately for urgent care and assistance.</p>
+  </div>
+  <div class="emerg-right">
+    <div class="emerg-label">24/7 Emergency Line</div>
+    <div class="emerg-num">+1 (940) 347-7005</div>
+    <div class="emerg-sub">Always available - Central Time</div>
+  </div>
+</div>
+
+<section class="team" id="team">
+  <div class="eyebrow">Our Physicians</div>
+  <h2 class="sec-h">Meet Our Specialists</h2>
+  <p class="sec-p">Our board-certified physicians bring decades of combined experience across oncology, gastroenterology, surgery and more.</p>
+  <div class="docs">
+    <div class="doc"><div class="doc-av">&#128104;&#8205;&#9877;</div><div class="doc-name">Dr. Michael Cole</div><div class="doc-spec">Gastroenterology and Oncology</div></div>
+    <div class="doc"><div class="doc-av">&#128105;&#8205;&#9877;</div><div class="doc-name">Dr. Evelyn Marsh</div><div class="doc-spec">Senior Histopathologist</div></div>
+    <div class="doc"><div class="doc-av">&#128104;&#8205;&#9877;</div><div class="doc-name">Dr. James Reid</div><div class="doc-spec">Surgical Oncology</div></div>
+    <div class="doc"><div class="doc-av">&#128105;&#8205;&#9877;</div><div class="doc-name">Dr. Angela Brooks</div><div class="doc-spec">Anaesthesiology</div></div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="eyebrow">Find Us</div>
+  <h2 class="sec-h">Contact and Location</h2>
+  <div class="contact-grid">
+    <div class="ci-list">
+      <div class="ci"><div class="ci-ic">&#128205;</div><div><div class="ci-label">Address</div><div class="ci-val">Jones St, Jonesboro<br/>AR 72401, United States</div></div></div>
+      <div class="ci"><div class="ci-ic">&#128222;</div><div><div class="ci-label">Phone</div><div class="ci-val"><a href="tel:+19403477005">+1 (940) 347-7005</a></div><div class="ci-note">Emergency line - available 24/7</div></div></div>
+      <div class="ci"><div class="ci-ic">&#9993;</div><div><div class="ci-label">Email</div><div class="ci-val"><a href="mailto:gracelifehospital21@gmail.com">gracelifehospital21@gmail.com</a></div></div></div>
+      <div class="ci"><div class="ci-ic">&#128336;</div><div><div class="ci-label">Hours (Central Time)</div><div class="ci-val">Mon - Fri: 7:00 AM - 8:00 PM<br/>Saturday: 8:00 AM - 5:00 PM<br/>Emergency: 24/7</div></div></div>
+      <a href="https://maps.google.com/?q=Jones+St,+Jonesboro,+AR+72401" target="_blank" class="btn btn-gold" style="width:fit-content;margin-top:4px;">Get Directions</a>
+    </div>
+    <div>
+      <div class="map-box">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.87!2d-90.69430!3d35.84230!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87d37b5dea3db60b%3A0xbe5c8eeed059e8dd!2sJones%20St%2C%20Jonesboro%2C%20AR%2072401%2C%20USA!5e0!3m2!1sen!2sus!4v1699000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Grace Life Hospital Location"></iframe>
+      </div>
+      <div class="map-cap">Jones St, Jonesboro, AR 72401, United States</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-logo">Grace <span>Life</span> Hospital</div>
+      <p class="foot-desc">Providing compassionate, expert medical care to the Jonesboro, Arkansas community since 2010. Your health and dignity are our highest priority.</p>
+      <div class="foot-badge">HIPAA Compliant and Confidential</div>
+    </div>
+    <div class="foot-col"><h4>Services</h4><ul><li><a href="#services">Oncology</a></li><li><a href="#services">Gastroenterology</a></li><li><a href="#services">General Surgery</a></li><li><a href="#services">Laboratory</a></li><li><a href="#services">Imaging</a></li><li><a href="#services">Emergency Care</a></li></ul></div>
+    <div class="foot-col"><h4>Hospital</h4><ul><li><a href="#about">About Us</a></li><li><a href="#team">Our Doctors</a></li><li><a href="#contact">Contact</a></li><li><a href="#contact">Find Us</a></li></ul></div>
+    <div class="foot-col"><h4>Contact</h4><ul><li><a href="#">Jones St, Jonesboro, AR 72401</a></li><li><a href="tel:+19403477005">+1 (940) 347-7005</a></li><li><a href="mailto:gracelifehospital21@gmail.com">gracelifehospital21@gmail.com</a></li><li><a href="#">Mon-Fri: 7AM-8PM CT</a></li></ul></div>
+  </div>
+  <div class="foot-bottom">
+    <div class="foot-copy">2024 Grace Life Hospital. All rights reserved. Jones St, Jonesboro, AR 72401</div>
+    <div class="foot-hipaa">Patient records protected under HIPAA Privacy Rule</div>
+  </div>
+</footer>
+
+<!-- CHAT BUTTON -->
+<button id="chat-btn" onclick="toggleChat()" title="Chat with us">
+  <div class="pulse"></div>
+  <svg id="chat-icon" width="26" height="26" viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+  <svg id="close-icon" width="24" height="24" viewBox="0 0 24 24" fill="white" style="display:none"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+</button>
+
+<!-- CHAT WINDOW -->
+<div id="chat-win">
+  <div class="chat-head">
+    <div class="chat-av">&#127973;</div>
+    <div style="flex:1">
+      <div class="chat-hname">Grace Life Hospital</div>
+      <div class="chat-hstatus">AI Support Assistant - Online</div>
+    </div>
+  </div>
+  <div class="chat-msgs" id="msgs">
+    <div class="msg bot">Hello! Welcome to Grace Life Hospital. I am your virtual assistant. How can I help you today?</div>
+  </div>
+  <div class="qrs" id="qrs">
+    <button class="qr" onclick="sendQ(this,'How do I book an appointment?')">Book Appointment</button>
+    <button class="qr" onclick="sendQ(this,'What services do you offer?')">Services</button>
+    <button class="qr" onclick="sendQ(this,'Where are you located?')">Location</button>
+    <button class="qr" onclick="sendQ(this,'What are your opening hours?')">Hours</button>
+  </div>
+  <div class="chat-foot">
+    <input id="chat-input" type="text" placeholder="Type your message..." onkeydown="if(event.key==='Enter')sendMsg()"/>
+    <button id="send-btn" onclick="sendMsg()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  // fade in
+  const obs=new IntersectionObserver(es=>{es.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add("visible"),i*100)})},{threshold:0.1});
+  document.querySelectorAll(".fade-in").forEach(el=>obs.observe(el));
+
+  // chat state
+  let isOpen=false;
+  const history=[];
+
+  function toggleChat(){
+    isOpen=!isOpen;
+    document.getElementById("chat-btn").classList.toggle("open",isOpen);
+    document.getElementById("chat-win").classList.toggle("open",isOpen);
+    document.getElementById("chat-icon").style.display=isOpen?"none":"block";
+    document.getElementById("close-icon").style.display=isOpen?"block":"none";
+    if(isOpen) document.getElementById("chat-input").focus();
+  }
+
+  function sendQ(btn,text){
+    document.getElementById("qrs").style.display="none";
+    send(text);
+  }
+
+  function sendMsg(){
+    const inp=document.getElementById("chat-input");
+    const txt=inp.value.trim();
+    if(!txt) return;
+    inp.value="";
+    send(txt);
+  }
+
+  function addMsg(text,cls){
+    const box=document.getElementById("msgs");
+    const d=document.createElement("div");
+    d.className="msg "+cls;
+    d.textContent=text;
+    box.appendChild(d);
+    box.scrollTop=box.scrollHeight;
+    return d;
+  }
+
+  function showTyping(){
+    const box=document.getElementById("msgs");
+    const d=document.createElement("div");
+    d.className="typing-ind";
+    d.innerHTML="<span></span><span></span><span></span>";
+    box.appendChild(d);
+    box.scrollTop=box.scrollHeight;
+    return d;
+  }
+
+  async function send(text){
+    addMsg(text,"usr");
+    history.push({role:"user",content:text});
+    const t=showTyping();
+    try{
+      const r=await fetch("https://api.anthropic.com/v1/messages",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          model:"claude-sonnet-4-20250514",
+          max_tokens:500,
+          system:"You are a friendly AI support assistant for Grace Life Hospital in Jonesboro Arkansas. Keep answers short, 2-3 sentences, warm and helpful. Hospital info: Address: Jones St Jonesboro AR 72401. Phone: +1 (940) 347-7005. Email: gracelifehospital21@gmail.com. Hours: Mon-Fri 7AM-8PM CT, Sat 8AM-5PM CT, Emergency 24/7. Services: Oncology, Gastroenterology, General Surgery, Laboratory and Pathology, Diagnostic Imaging, Emergency Care. Doctors: Dr Michael Cole Gastroenterology and Oncology, Dr Evelyn Marsh Histopathologist, Dr James Reid Surgical Oncology, Dr Angela Brooks Anaesthesiology. For emergencies direct to call +1 (940) 347-7005. No diagnoses or prescriptions. Plain text only.",
+          messages:history
+        })
+      });
+      const data=await r.json();
+      t.remove();
+      const reply=data.content[0].text;
+      history.push({role:"assistant",content:reply});
+      addMsg(reply,"bot");
+    } catch(e){
+      t.remove();
+      addMsg("Sorry I am having trouble connecting. Please call us at +1 (940) 347-7005 for immediate assistance.","bot");
+    }
+  }
+</script>
+</body>
+</html>
