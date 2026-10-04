@@ -1,5 +1,5 @@
 import type {
-  ChatErrorCode, Conversation, NewConversation, ReplyEvent, VisitorEvent,
+  ChatErrorCode, Conversation, Mode, NewConversation, ReplyEvent, VisitorEvent, VisitorUpdates,
 } from "../../shared/protocol.js";
 
 export type SendOutcome =
@@ -62,17 +62,55 @@ export async function sendMessage(
   return { kind: "error", code: "network" };
 }
 
-/** Live channel for staff messages. EventSource reconnects by itself. */
-export function openLive(s: NewConversation, onEvent: (e: VisitorEvent) => void): EventSource {
-  const es = new EventSource(`/api/conversations/${s.id}/live?token=${encodeURIComponent(s.token)}`);
-  es.onmessage = (m: MessageEvent<string>) => {
+export interface Live {
+  close(): void;
+}
+
+/**
+ * Polls for staff replies, mode changes and typing. Polling (not a held-open
+ * connection) so it works on serverless hosts. Faster while staff are in the chat.
+ */
+export function openLive(s: NewConversation, onEvent: (e: VisitorEvent) => void, since = 0): Live {
+  let cursor = since;
+  let mode: Mode | null = null;
+  let staffName: string | null = null;
+  let stopped = false;
+  let timer: ReturnType<typeof setTimeout> | undefined;
+
+  const tick = async () => {
+    let delay = 4000;
     try {
-      onEvent(JSON.parse(m.data) as VisitorEvent);
+      const r = await fetch(`/api/conversations/${s.id}/updates?since=${cursor}`, {
+        headers: { "X-Conversation-Token": s.token },
+        cache: "no-store",
+      });
+      if (r.ok) {
+        const u = (await r.json()) as VisitorUpdates;
+        if (u.mode !== mode || u.staffName !== staffName) {
+          mode = u.mode;
+          staffName = u.staffName;
+          onEvent({ type: "mode", mode: u.mode, staffName: u.staffName });
+        }
+        for (const m of u.messages) {
+          cursor = Math.max(cursor, m.at);
+          onEvent({ type: "message", message: m });
+        }
+        if (u.typing) onEvent({ type: "typing", staffName: u.typing });
+        if (u.mode === "human") delay = 1500;
+      }
     } catch {
-      /* ignore malformed frame */
+      /* offline for a moment; try again */
     }
+    if (document.hidden) delay = Math.max(delay, 10_000);
+    if (!stopped) timer = setTimeout(tick, delay);
   };
-  return es;
+  void tick();
+  return {
+    close() {
+      stopped = true;
+      clearTimeout(timer);
+    },
+  };
 }
 
 async function* readSse<E>(body: ReadableStream<BufferSource>): AsyncGenerator<E> {

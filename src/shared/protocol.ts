@@ -48,13 +48,34 @@ export type ReplyEvent =
 
 export type ChatErrorCode = "rate_limited" | "bad_request" | "not_found";
 
-/** Live channel to a visitor: GET /api/conversations/:id/live (SSE). */
+/**
+ * Live updates are polled (serverless hosts can't hold connections open).
+ * GET /api/conversations/:id/updates?since=<last message at>
+ */
+export interface VisitorUpdates {
+  mode: Mode;
+  staffName: string | null;
+  /** Name of the staff member typing right now, if any. */
+  typing: string | null;
+  messages: Message[];
+}
+
+/** GET /api/admin/updates?since=<cursor> */
+export interface AdminUpdates {
+  staffOnline: number;
+  /** Conversations changed since the cursor. */
+  conversations: ConversationSummary[];
+  /** Pass back as `since` on the next poll. */
+  cursor: number;
+}
+
+/** What the visitor's poller turns updates into. */
 export type VisitorEvent =
   | { type: "message"; message: Message }
   | { type: "mode"; mode: Mode; staffName: string | null }
   | { type: "typing"; staffName: string };
 
-/** Live channel to staff: GET /api/admin/live (SSE). */
+/** What the staff console's poller turns updates into. */
 export type AdminEvent =
   | { type: "conversation"; summary: ConversationSummary }
   | { type: "message"; conversationId: string; message: Message }

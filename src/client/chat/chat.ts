@@ -10,7 +10,7 @@ import { followUps, offlineAnswer, STARTER_CHIPS, type Suggestion } from "../../
 import { assessUrgency } from "../../shared/triage.js";
 import { ASK_EVENT } from "../page.js";
 import * as store from "./store.js";
-import { createConversation, fetchConversation, openLive, sendMessage } from "./transport.js";
+import { createConversation, fetchConversation, openLive, sendMessage, type Live } from "./transport.js";
 import { ChatView, writeRich } from "./view.js";
 
 function greeting(): string {
@@ -26,7 +26,7 @@ export class Chat {
   private mode: Mode = "bot";
   private staffName: string | null = null;
   private replySource: "ai" | "offline" = "ai";
-  private live: EventSource | null = null;
+  private live: Live | null = null;
   private busy = false;
   private isOpen = false;
   private inflight: AbortController | null = null;
@@ -196,7 +196,7 @@ export class Chat {
 
   private connectLive(): void {
     if (this.live || !this.session) return;
-    this.live = openLive(this.session, (e) => this.onLive(e));
+    this.live = openLive(this.session, (e) => this.onLive(e), this.messages.at(-1)?.at ?? 0);
   }
 
   private onLive(e: VisitorEvent): void {
