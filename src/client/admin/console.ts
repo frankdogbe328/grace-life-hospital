@@ -145,6 +145,7 @@ class StaffConsole {
           code === "invalid_credentials" ? "That password isn't right."
           : code === "rate_limited" ? "Too many attempts. Wait a few minutes and try again."
           : code === "staff_login_disabled" ? "Staff sign-in isn't set up on this server (ADMIN_PASSWORD)."
+          : ex instanceof ApiError ? `Staff sign-in isn't available on this server (error ${ex.status}).`
           : "Couldn't sign in. Check your connection.";
         pass.value = "";
         pass.focus();
