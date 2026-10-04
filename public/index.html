@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Grace Life Hospital | Jonesboro, AR</title>
+  <meta name="description" content="Grace Life Hospital in Jonesboro, Arkansas: oncology, gastroenterology, surgery, imaging, laboratory and 24/7 emergency care."/>
+  <meta name="theme-color" content="#0a1f35"/>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 rx=%227%22 fill=%22%23c9a84c%22/%3E%3Cpath d=%22M13 7h6v6h6v6h-6v6h-6v-6H7v-6h6z%22 fill=%22%230a1f35%22/%3E%3C/svg%3E"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--navy:#0a1f35;--blue:#1a5a8a;--mid:#2e7eb5;--sky:#5aafd4;--light:#eaf4fb;--gold:#c9a84c;--gold2:#f0d080;--white:#ffffff;--off:#f5f8fc;--text:#0e1e2e;--muted:#5a7a95;--border:#d0e4f0}
+    html{scroll-behavior:smooth}
+    body{font-family:"Outfit",sans-serif;color:var(--text);background:var(--white);overflow-x:hidden}
+    nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0 64px;height:72px;background:rgba(10,31,53,0.97);backdrop-filter:blur(16px);border-bottom:1px solid rgba(201,168,76,0.2)}
+    .nav-logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+    .nav-cross{width:36px;height:36px;background:var(--gold);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--navy);font-weight:900;flex-shrink:0}
+    .nav-name{font-family:"Cormorant Garamond",serif;font-size:20px;font-weight:700;color:var(--white)}
+    .nav-name span{color:var(--gold)}
+    .nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+    .nav-links a{color:rgba(255,255,255,0.72);text-decoration:none;font-size:14px;font-weight:500;transition:color 0.2s}
+    .nav-links a:hover{color:var(--gold)}
+    .nav-cta{background:var(--gold)!important;color:var(--navy)!important;padding:9px 22px!important;border-radius:4px;font-weight:600!important}
+    .hero{min-height:100vh;background:var(--navy);display:grid;grid-template-columns:1fr 1fr;align-items:center;padding-top:72px;position:relative;overflow:hidden}
+    .hero::after{content:"";position:absolute;top:0;right:0;bottom:0;width:50%;background:linear-gradient(135deg,#0d3358 0%,#1a5a8a 60%,#2e7eb5 100%);clip-path:polygon(8% 0,100% 0,100% 100%,0 100%)}
+    .hero-left{padding:80px 64px;z-index:1}
+    .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(201,168,76,0.12);border:1px solid rgba(201,168,76,0.3);color:var(--gold);font-size:11px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;padding:7px 16px;border-radius:30px;margin-bottom:32px}
+    .hero h1{font-family:"Cormorant Garamond",serif;font-size:clamp(46px,5.5vw,74px);font-weight:700;color:var(--white);line-height:1.06;margin-bottom:24px}
+    .hero h1 em{color:var(--gold);font-style:normal}
+    .hero-desc{font-size:16px;color:rgba(255,255,255,0.62);line-height:1.8;max-width:420px;margin-bottom:44px;font-weight:300}
+    .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:14px 30px;border-radius:4px;font-size:14px;font-weight:600;text-decoration:none;transition:all 0.25s;cursor:pointer;border:none}
+    .btn-gold{background:var(--gold);color:var(--navy)}
+    .btn-gold:hover{background:var(--gold2);box-shadow:0 8px 28px rgba(201,168,76,0.35);transform:translateY(-2px)}
+    .btn-ghost{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.28)}
+    .btn-ghost:hover{border-color:rgba(255,255,255,0.65);background:rgba(255,255,255,0.06)}
+    .hero-right{z-index:2;padding:80px 64px 80px 72px}
+    .stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .hstat{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:28px 24px;transition:all 0.3s}
+    .hstat:hover{background:rgba(255,255,255,0.1);transform:translateY(-4px)}
+    .hstat-num{font-family:"Cormorant Garamond",serif;font-size:44px;font-weight:700;color:var(--gold);line-height:1;margin-bottom:6px}
+    .hstat-label{font-size:13px;color:rgba(255,255,255,0.52);line-height:1.4}
+    .ticker{background:var(--gold);overflow:hidden;padding:13px 0}
+    .ticker-inner{display:inline-flex;gap:56px;animation:scroll 24s linear infinite}
+    .ticker span{font-size:12px;font-weight:700;color:var(--navy);letter-spacing:1px;text-transform:uppercase}
+    .ticker span::before{content:"+ "}
+    @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    .about{padding:110px 64px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+    .eyebrow{font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--mid);margin-bottom:14px;display:flex;align-items:center;gap:10px}
+    .eyebrow::before{content:"";width:28px;height:2px;background:var(--gold);display:block}
+    .sec-h{font-family:"Cormorant Garamond",serif;font-size:clamp(30px,3.5vw,46px);font-weight:700;color:var(--navy);line-height:1.15;margin-bottom:20px}
+    .sec-p{font-size:15px;color:var(--muted);line-height:1.85;margin-bottom:14px;font-weight:300}
+    .feats{display:flex;flex-direction:column;gap:16px;margin-top:32px}
+    .feat{display:flex;align-items:flex-start;gap:16px}
+    .feat-ic{width:40px;height:40px;background:var(--light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+    .feat-title{font-size:14px;font-weight:600;color:var(--navy);margin-bottom:3px}
+    .feat-text{font-size:13px;color:var(--muted);line-height:1.6}
+    .card-stack{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .acard{background:var(--navy);border-radius:12px;padding:28px 22px;transition:transform 0.3s}
+    .acard:hover{transform:translateY(-5px)}
+    .acard-big{grid-column:1/-1;background:linear-gradient(135deg,var(--blue),var(--mid))}
+    .acard-icon{font-size:26px;margin-bottom:14px}
+    .acard-title{font-family:"Cormorant Garamond",serif;font-size:18px;color:var(--white);font-weight:600;margin-bottom:6px}
+    .acard-text{font-size:12px;color:rgba(255,255,255,0.52);line-height:1.6}
+    .acard-num{font-family:"Cormorant Garamond",serif;font-size:34px;color:var(--gold);font-weight:700;margin-top:12px}
+    .services{padding:110px 64px;background:var(--off)}
+    .svc-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:56px;flex-wrap:wrap;gap:20px}
+    .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+    .scard{background:var(--white);border-radius:10px;padding:36px 28px;border:1px solid var(--border);transition:all 0.3s;position:relative;overflow:hidden}
+    .scard::after{content:"";position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--sky));transform:scaleX(0);transform-origin:left;transition:transform 0.35s}
+    .scard:hover{transform:translateY(-8px);box-shadow:0 24px 56px rgba(26,90,138,0.12);border-color:transparent}
+    .scard:hover::after{transform:scaleX(1)}
+    .scard-ic{width:56px;height:56px;background:var(--light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px;transition:background 0.3s}
+    .scard:hover .scard-ic{background:var(--blue)}
+    .scard-title{font-family:"Cormorant Garamond",serif;font-size:22px;color:var(--navy);font-weight:600;margin-bottom:10px}
+    .scard-text{font-size:13.5px;color:var(--muted);line-height:1.75}
+    .scard-link{display:inline-flex;align-items:center;gap:6px;margin-top:18px;font-size:13px;font-weight:600;color:var(--blue);text-decoration:none;transition:gap 0.2s}
+    .scard-link:hover{gap:10px}
+    .emerg{background:linear-gradient(135deg,#8b1a1a,#c0392b);padding:0 64px;display:flex;align-items:stretch}
+    .emerg-left{padding:52px 60px 52px 0;border-right:1px solid rgba(255,255,255,0.15);flex:1}
+    .emerg-right{padding:52px 0 52px 60px;display:flex;flex-direction:column;justify-content:center}
+    .emerg-label{font-size:11px;font-weight:700;letter-spacing:3px;color:rgba(255,255,255,0.55);text-transform:uppercase;margin-bottom:10px}
+    .emerg-title{font-family:"Cormorant Garamond",serif;font-size:30px;color:var(--white);font-weight:700;margin-bottom:8px}
+    .emerg-text{font-size:14px;color:rgba(255,255,255,0.68);line-height:1.7;max-width:400px}
+    .emerg-num{font-family:"Cormorant Garamond",serif;font-size:48px;font-weight:700;color:var(--white);letter-spacing:1px;margin-bottom:6px}
+    .emerg-sub{font-size:12px;color:rgba(255,255,255,0.5);letter-spacing:1px;text-transform:uppercase}
+    .team{padding:90px 64px;background:var(--navy);text-align:center}
+    .team .eyebrow{justify-content:center;color:var(--sky)}
+    .team .eyebrow::before{background:var(--gold)}
+    .team .sec-h{color:var(--white)}
+    .team .sec-p{color:rgba(255,255,255,0.52);max-width:500px;margin:0 auto 48px}
+    .docs{display:flex;justify-content:center;gap:28px;flex-wrap:wrap}
+    .doc{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:30px 24px;width:195px;transition:all 0.3s}
+    .doc:hover{background:rgba(255,255,255,0.1);transform:translateY(-6px)}
+    .doc-av{width:64px;height:64px;background:linear-gradient(135deg,var(--blue),var(--mid));border-radius:50%;margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:26px}
+    .doc-name{font-family:"Cormorant Garamond",serif;font-size:16px;color:var(--white);font-weight:600;margin-bottom:4px}
+    .doc-spec{font-size:11.5px;color:var(--sky)}
+    .contact{padding:110px 64px;background:var(--white)}
+    .contact-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:64px;margin-top:56px;align-items:start}
+    .ci-list{display:flex;flex-direction:column;gap:30px}
+    .ci{display:flex;gap:18px;align-items:flex-start}
+    .ci-ic{width:48px;height:48px;background:var(--light);border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px}
+    .ci-label{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--mid);margin-bottom:5px}
+    .ci-val{font-size:15px;color:var(--navy);font-weight:500;line-height:1.55}
+    .ci-val a{color:var(--blue);text-decoration:none}
+    .ci-val a:hover{text-decoration:underline}
+    .ci-note{font-size:12px;color:var(--muted);margin-top:3px}
+    .map-box{border-radius:12px;overflow:hidden;box-shadow:0 16px 56px rgba(26,90,138,0.14);border:1px solid var(--border);height:440px}
+    .map-box iframe{width:100%;height:100%;border:none;display:block}
+    .map-cap{margin-top:10px;font-size:12px;color:var(--muted)}
+    .map-cap::before{content:"Location: "}
+    footer{background:#060f1a;padding:64px 64px 32px}
+    .foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+    .foot-logo{font-family:"Cormorant Garamond",serif;font-size:22px;color:var(--white);font-weight:700;margin-bottom:14px}
+    .foot-logo span{color:var(--gold)}
+    .foot-desc{font-size:13px;color:rgba(255,255,255,0.36);line-height:1.8;margin-bottom:20px}
+    .foot-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.25);color:var(--gold);font-size:11px;font-weight:600;padding:6px 14px;border-radius:30px}
+    .foot-col h4{font-size:11px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:18px}
+    .foot-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+    .foot-col a{font-size:13px;color:rgba(255,255,255,0.42);text-decoration:none;transition:color 0.2s}
+    .foot-col a:hover{color:var(--white)}
+    .foot-bottom{border-top:1px solid rgba(255,255,255,0.06);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+    .foot-copy{font-size:12px;color:rgba(255,255,255,0.2)}
+    .foot-hipaa{font-size:11px;color:rgba(255,255,255,0.18)}
+    .fade-in{opacity:0;transform:translateY(22px);transition:opacity 0.65s,transform 0.65s}
+    .fade-in.visible{opacity:1;transform:translateY(0)}
+
+    /* CHAT */
+    #chat-btn{position:fixed;bottom:28px;right:28px;z-index:9999;width:62px;height:62px;border-radius:50%;background:var(--blue);border:none;cursor:pointer;box-shadow:0 6px 24px rgba(26,90,138,0.45);display:flex;align-items:center;justify-content:center;transition:all 0.3s}
+    #chat-btn:hover{background:var(--mid);transform:scale(1.08)}
+    #chat-btn.open{background:#c0392b}
+    .pulse{position:absolute;top:2px;right:2px;width:14px;height:14px;background:#2ecc71;border-radius:50%;border:2px solid white}
+    .pulse::after{content:"";position:absolute;inset:-3px;border-radius:50%;background:rgba(46,204,113,0.35);animation:pulse-anim 1.8s ease-out infinite}
+    @keyframes pulse-anim{0%{transform:scale(1);opacity:1}100%{transform:scale(2.2);opacity:0}}
+    #chat-win{position:fixed;bottom:104px;right:28px;z-index:9998;width:370px;height:540px;background:var(--white);border-radius:16px;box-shadow:0 20px 64px rgba(10,31,53,0.25);display:flex;flex-direction:column;overflow:hidden;transform:scale(0.85) translateY(20px);opacity:0;pointer-events:none;transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1);transform-origin:bottom right}
+    #chat-win.open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
+    .chat-head{background:linear-gradient(135deg,var(--navy),var(--blue));padding:16px 18px;display:flex;align-items:center;gap:12px}
+    .chat-av{width:42px;height:42px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+    .chat-hname{font-weight:700;color:var(--white);font-size:15px}
+    .chat-hstatus{font-size:12px;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:5px}
+    .chat-hstatus::before{content:"";width:7px;height:7px;background:#2ecc71;border-radius:50%;display:inline-block}
+    .chat-msgs{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;background:#f8fbfe}
+    .chat-msgs::-webkit-scrollbar{width:4px}
+    .chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+    .msg{max-width:84%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.55;animation:msgIn 0.25s ease}
+    @keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+    .bot{background:var(--white);color:var(--text);border:1px solid var(--border);border-bottom-left-radius:4px;align-self:flex-start;box-shadow:0 2px 8px rgba(0,0,0,0.05)}
+    .usr{background:var(--blue);color:var(--white);border-bottom-right-radius:4px;align-self:flex-end}
+    .typing-ind{display:flex;gap:4px;padding:12px 14px;background:var(--white);border:1px solid var(--border);border-radius:14px;border-bottom-left-radius:4px;width:fit-content;align-self:flex-start}
+    .typing-ind span{width:7px;height:7px;background:var(--muted);border-radius:50%;animation:bounce 1.2s infinite}
+    .typing-ind span:nth-child(2){animation-delay:0.2s}
+    .typing-ind span:nth-child(3){animation-delay:0.4s}
+    @keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-7px)}}
+    .qrs{display:flex;flex-wrap:wrap;gap:7px;padding:0 14px 10px}
+    .qr{background:var(--white);border:1.5px solid var(--blue);color:var(--blue);font-size:12px;font-weight:600;padding:6px 12px;border-radius:20px;cursor:pointer;transition:all 0.2s;font-family:"Outfit",sans-serif}
+    .qr:hover{background:var(--blue);color:var(--white)}
+    .chat-foot{display:flex;align-items:center;gap:8px;padding:12px 14px;border-top:1px solid var(--border);background:var(--white)}
+    #chat-input{flex:1;border:1.5px solid var(--border);border-radius:24px;padding:10px 16px;font-size:13.5px;font-family:"Outfit",sans-serif;outline:none;transition:border 0.2s;color:var(--text);background:var(--off)}
+    #chat-input:focus{border-color:var(--blue)}
+    #send-btn{width:38px;height:38px;background:var(--blue);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s}
+    #send-btn:hover{background:var(--mid)}
+    #send-btn:disabled{opacity:0.45;cursor:not-allowed}
+    #chat-btn .ic-close{display:none}
+    #chat-btn.open .ic-chat{display:none}
+    #chat-btn.open .ic-close{display:block}
+    #chat-btn.open .pulse{display:none}
+    .chat-hstatus.offline::before{background:var(--gold2)}
+    .chat-clinic{font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .chat-clinic.closed{color:rgba(240,208,128,0.75)}
+    .chat-reset{width:34px;height:34px;border-radius:50%;border:1px solid rgba(255,255,255,0.2);background:rgba(255,255,255,0.08);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.2s}
+    .chat-reset:hover{background:rgba(255,255,255,0.2)}
+    .msg a{color:inherit;font-weight:600;text-decoration:underline;text-underline-offset:2px}
+    .bot a{color:var(--blue)}
+    .chat-notice{align-self:center;font-size:11.5px;color:var(--muted);background:var(--light);padding:5px 12px;border-radius:12px;text-align:center}
+    .alert-card{align-self:stretch;background:#fdecea;border:1.5px solid #e74c3c;border-radius:12px;padding:12px 14px;font-size:13px;line-height:1.5;color:#7b1d14;animation:msgIn 0.25s ease}
+    .alert-card.crisis{background:#eef4fb;border-color:var(--blue);color:var(--navy)}
+    .alert-card strong{display:block;font-size:13.5px;margin-bottom:4px}
+    .alert-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+    .alert-btn{font-size:12.5px;font-weight:600;text-decoration:none;padding:7px 12px;border-radius:20px;border:1.5px solid currentColor;color:inherit}
+    .alert-btn.primary{background:#c0392b;border-color:#c0392b;color:#fff}
+    .alert-card.crisis .alert-btn.primary{background:var(--blue);border-color:var(--blue)}
+    .qrs.is-busy .qr{opacity:0.5;pointer-events:none}
+    .qrs:empty{display:none}
+    .chat-disclaimer{font-size:10.5px;color:var(--muted);text-align:center;padding:0 14px 10px;background:var(--white)}
+    /* ===== REDESIGN ===== */
+    .ic{width:18px;height:18px;flex-shrink:0;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    button.btn{font-family:inherit}
+    .btn .ic{width:17px;height:17px}
+    .nav-cta{display:inline-flex!important;align-items:center;gap:7px}
+    .nav-cta .ic{width:15px;height:15px}
+    .nav-links a.active:not(.nav-cta){color:var(--gold)}
+    .nav-toggle{display:none;width:42px;height:42px;border-radius:8px;border:1px solid rgba(255,255,255,0.18);background:transparent;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+    .nav-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;transition:transform 0.25s,opacity 0.25s}
+    .nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0}
+    .nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    nav.scrolled{height:64px;box-shadow:0 8px 30px rgba(0,0,0,0.25)}
+    nav{transition:height 0.25s,box-shadow 0.25s}
+
+    /* hero */
+    .hero{grid-template-columns:1.05fr 1fr}
+    .hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 15% 20%,rgba(46,126,181,0.25),transparent 45%),radial-gradient(circle at 85% 90%,rgba(201,168,76,0.12),transparent 40%);pointer-events:none}
+    .hero-left{position:relative}
+    .live-dot{width:8px;height:8px;border-radius:50%;background:#2ecc71;display:inline-block;box-shadow:0 0 0 0 rgba(46,204,113,0.6);animation:livePulse 2s infinite}
+    .live-dot.closed{background:var(--gold2);box-shadow:none;animation:none}
+    .live-dot.red{background:#fff;margin-right:8px;vertical-align:middle;box-shadow:0 0 0 0 rgba(255,255,255,0.6)}
+    @keyframes livePulse{70%{box-shadow:0 0 0 8px rgba(46,204,113,0)}100%{box-shadow:0 0 0 0 rgba(46,204,113,0)}}
+    .hero-trust{display:flex;gap:36px;margin-top:48px;padding-top:28px;border-top:1px solid rgba(255,255,255,0.1);flex-wrap:wrap}
+    .hero-trust strong{display:block;font-family:"Cormorant Garamond",serif;font-size:38px;color:var(--gold);line-height:1}
+    .hero-trust span{font-size:12.5px;color:rgba(255,255,255,0.55)}
+    .hero-right{position:relative;padding:110px 64px 80px 40px}
+    .hero-photo{position:relative;margin:0;border-radius:22px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,0.45);transform:rotate(1.5deg);border:6px solid rgba(255,255,255,0.08)}
+    .hero-photo img{display:block;width:100%;height:auto;aspect-ratio:4/3.2;object-fit:cover;filter:saturate(1.05)}
+    .hero-photo::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(10,31,53,0.65))}
+    .ecg{position:absolute;left:0;right:0;bottom:14px;width:100%;height:60px;z-index:1}
+    .ecg path{fill:none;stroke:var(--gold2);stroke-width:2.5;stroke-linejoin:round;stroke-dasharray:900;stroke-dashoffset:900;animation:ecgDraw 3.2s ease-in-out infinite;filter:drop-shadow(0 0 6px rgba(240,208,128,0.7))}
+    @keyframes ecgDraw{0%{stroke-dashoffset:900}60%{stroke-dashoffset:0}100%{stroke-dashoffset:-900}}
+    .float-card{position:absolute;display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.96);border-radius:14px;padding:12px 16px;box-shadow:0 18px 40px rgba(0,0,0,0.3);animation:bob 5s ease-in-out infinite}
+    .float-card strong{display:block;font-size:13.5px;color:var(--navy)}
+    .float-card span:not(.fc-ic){font-size:11.5px;color:var(--muted)}
+    .fc-ic{width:38px;height:38px;border-radius:10px;background:var(--light);color:var(--blue);display:flex;align-items:center;justify-content:center}
+    .fc-ic.red{background:#fdecea;color:#c0392b}
+    .fc-er{left:0;top:84px}
+    .fc-chat{right:40px;bottom:48px;animation-delay:-2.5s}
+    @keyframes bob{50%{transform:translateY(-10px)}}
+
+    /* about */
+    .about{grid-template-columns:1fr 1.05fr}
+    .feat-ic{color:var(--blue)}
+    .feat-ic .ic{width:20px;height:20px}
+    .about-visual{position:relative;padding:0 0 40px 40px}
+    .about-img{display:block;width:100%;height:auto;aspect-ratio:5/4;object-fit:cover;border-radius:20px;box-shadow:0 30px 70px rgba(10,31,53,0.18)}
+    .about-visual::before{content:"";position:absolute;left:0;top:40px;width:70%;height:80%;border-radius:20px;background:repeating-linear-gradient(45deg,var(--light) 0 10px,transparent 10px 20px);z-index:-1}
+    .about-badge{position:absolute;left:0;bottom:0;display:flex;align-items:center;gap:14px;background:var(--navy);color:#fff;padding:18px 22px;border-radius:16px;box-shadow:0 20px 50px rgba(10,31,53,0.35)}
+    .about-badge .ic{width:30px;height:30px;color:var(--gold);stroke-width:1.5}
+    .about-badge strong{display:block;font-family:"Cormorant Garamond",serif;font-size:30px;color:var(--gold);line-height:1}
+    .about-badge span{font-size:12px;color:rgba(255,255,255,0.6)}
+    .about-mini{position:absolute;right:-12px;top:24px;display:flex;flex-direction:column;gap:10px}
+    .about-mini div{display:flex;align-items:center;gap:8px;background:#fff;color:var(--navy);font-size:12.5px;font-weight:600;padding:9px 14px;border-radius:30px;box-shadow:0 10px 28px rgba(10,31,53,0.15)}
+    .about-mini .ic{color:var(--blue)}
+
+    /* services */
+    .svc-intro{font-size:14px;color:var(--muted);max-width:340px;line-height:1.7}
+    .scard{font:inherit;text-align:left;cursor:pointer;display:block;color:inherit;text-decoration:none;width:100%}
+    .scard-ic{color:var(--blue)}
+    .scard-ic .ic{width:26px;height:26px;stroke-width:1.6}
+    .scard:hover .scard-ic{color:#fff}
+    .scard-link .ic{width:15px;height:15px}
+    .scard:focus-visible{outline:3px solid var(--sky);outline-offset:3px}
+    .scard-er{background:linear-gradient(160deg,#fff,#fdf1ef)}
+    .scard-er .scard-ic{background:#fdecea;color:#c0392b}
+    .scard-er:hover .scard-ic{background:#c0392b;color:#fff}
+    .scard-er .scard-link{color:#c0392b}
+
+    /* facilities bento */
+    .inside{padding:110px 64px;background:var(--white)}
+    .inside-head{margin-bottom:44px}
+    .bento{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-template-rows:260px 260px;gap:18px}
+    .tile{position:relative;margin:0;border-radius:18px;overflow:hidden;background:var(--navy)}
+    .tile-big{grid-row:1/3}
+    .tile-wide{grid-column:2/4}
+    .tile img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.7s cubic-bezier(.2,.7,.2,1)}
+    .tile:hover img{transform:scale(1.06)}
+    .tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(6,18,32,0.85))}
+    .tile figcaption{position:absolute;left:20px;right:20px;bottom:18px;z-index:1;color:#fff}
+    .tile figcaption strong{display:block;font-family:"Cormorant Garamond",serif;font-size:22px}
+    .tile figcaption span{font-size:12.5px;color:rgba(255,255,255,0.75)}
+
+    /* journey */
+    .journey{padding:100px 64px;background:var(--off);text-align:center}
+    .journey .eyebrow{justify-content:center}
+    .steps{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;position:relative;counter-reset:none}
+    .steps::before{content:"";position:absolute;top:58px;left:12%;right:12%;border-top:2px dashed var(--border)}
+    .step{position:relative;background:var(--white);border:1px solid var(--border);border-radius:16px;padding:28px 22px 26px;text-align:left;transition:transform 0.3s,box-shadow 0.3s}
+    .step:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(26,90,138,0.12)}
+    .step-n{position:absolute;top:18px;right:20px;font-family:"Cormorant Garamond",serif;font-size:34px;font-weight:700;color:var(--light);line-height:1}
+    .step-ic{width:52px;height:52px;border-radius:14px;background:linear-gradient(135deg,var(--blue),var(--mid));color:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:18px;position:relative;z-index:1;box-shadow:0 10px 24px rgba(26,90,138,0.3)}
+    .step-ic .ic{width:24px;height:24px}
+    .step h3{font-family:"Cormorant Garamond",serif;font-size:21px;color:var(--navy);margin-bottom:6px}
+    .step p{font-size:13.5px;color:var(--muted);line-height:1.65}
+
+    /* emergency */
+    .emerg-num{text-decoration:none;display:block}
+    .emerg-num:hover{text-decoration:underline;text-decoration-thickness:2px}
+
+    /* doctors */
+    .docs{gap:24px}
+    .doc{width:230px;padding:32px 22px 24px;display:flex;flex-direction:column;align-items:center}
+    .doc-av{position:relative;width:96px;height:96px;font-size:30px;background:linear-gradient(135deg,hsl(var(--hue) 55% 42%),hsl(calc(var(--hue) + 40) 60% 60%));box-shadow:0 0 0 5px rgba(255,255,255,0.06),0 14px 30px rgba(0,0,0,0.3);margin-bottom:18px}
+    .doc-av span{font-family:"Cormorant Garamond",serif;font-weight:700;color:#fff;letter-spacing:1px}
+    .doc-av::after{content:"";position:absolute;inset:-9px;border-radius:50%;border:1.5px dashed rgba(201,168,76,0.45);animation:spin 18s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .doc-badge{position:absolute;right:-4px;bottom:-2px;width:34px;height:34px;padding:7px;border-radius:50%;background:var(--gold);color:var(--navy);stroke-width:2;box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+    .doc-av.has-photo{background:var(--navy)}
+    .doc-av img{width:100%;height:100%;border-radius:50%;object-fit:cover;object-position:50% 30%;display:block}
+    .doc-name{font-size:19px}
+    .doc-spec{min-height:30px}
+    .doc-book{margin-top:16px;font:inherit;font-size:12.5px;font-weight:600;color:var(--gold2);background:transparent;border:1px solid rgba(201,168,76,0.45);border-radius:20px;padding:8px 16px;cursor:pointer;transition:all 0.2s}
+    .doc-book:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
+
+    /* contact + footer */
+    .ci-ic{color:var(--blue)}
+    .ci-ic .ic{width:22px;height:22px}
+    .open-pill{display:inline-block;margin-left:8px;font-size:10px;letter-spacing:0.5px;padding:2px 9px;border-radius:12px;background:#e8f8ef;color:#1e8449;vertical-align:middle}
+    .open-pill.closed{background:#fff4d6;color:#8a6a12}
+    .open-pill:empty{display:none}
+    .foot-badge .ic{width:14px;height:14px}
+    .foot-credits{margin-top:18px;font-size:11px;color:rgba(255,255,255,0.22);line-height:1.7}
+    .foot-credits a{color:rgba(255,255,255,0.35)}
+
+    @media(max-width:1024px){
+      .hero{grid-template-columns:1fr}
+      .hero-right{padding:20px 0 0;max-width:620px}
+      .fc-er{top:auto;bottom:-18px;left:12px}
+      .fc-chat{display:none}
+      .about-visual{padding:0 0 40px 20px}
+      .about-mini{right:8px}
+      .inside,.journey{padding:70px 28px}
+      .bento{grid-template-columns:1fr 1fr;grid-template-rows:280px 200px 200px}
+      .tile-big{grid-column:1/3;grid-row:1}
+      .tile-wide{grid-column:1/3}
+      .steps{grid-template-columns:1fr 1fr}
+      .steps::before{display:none}
+    }
+    @media(max-width:860px){
+      .nav-toggle{display:flex}
+      .nav-links{display:flex!important;position:fixed;top:72px;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;padding:8px 20px 20px;background:#0a1f35;border-bottom:1px solid rgba(201,168,76,0.2);box-shadow:0 24px 40px rgba(0,0,0,0.35);opacity:0;visibility:hidden;transform:translateY(-10px);transition:opacity 0.25s,transform 0.25s,visibility 0s linear 0.25s}
+      .nav-links.open{opacity:1;visibility:visible;transform:none;transition:opacity 0.25s,transform 0.25s}
+      .nav-links li a{display:block;padding:14px 4px;border-bottom:1px solid rgba(255,255,255,0.07);font-size:16px}
+      .nav-links .nav-cta{display:flex!important;justify-content:center;margin-top:14px;border-bottom:none}
+      nav.scrolled .nav-links{top:64px}
+    }
+    @media(max-width:600px){
+      nav{padding:0 16px}
+      .hero{padding:100px 16px 50px}
+      .hero h1{font-size:44px}
+      .hero-trust{gap:22px}
+      .hero-trust strong{font-size:30px}
+      .hero-photo{transform:none}
+      .float-card{padding:10px 12px}
+      .about,.services,.contact,.team{padding-left:16px;padding-right:16px}
+      .inside,.journey{padding:60px 16px}
+      .about-mini{display:none}
+      .about-visual{padding:0 0 30px}
+      .about-badge{left:12px;padding:14px 16px}
+      .bento{grid-template-columns:1fr;grid-template-rows:none;grid-auto-rows:220px}
+      .tile-big,.tile-wide{grid-column:auto;grid-row:auto}
+      .steps{grid-template-columns:1fr}
+      .doc{width:100%;max-width:320px}
+      .emerg{padding:0 16px}
+      .emerg-num{font-size:36px}
+      footer{padding:48px 16px 24px}
+    }
+    /* staff replies, as the visitor sees them */
+    .msg.staff{align-self:flex-start;background:#fff8e6;border:1px solid #ecd9a3;border-bottom-left-radius:4px;color:var(--text)}
+    .msg.staff a{color:var(--blue)}
+    .staff-tag{display:block;font-size:10.5px;font-weight:700;letter-spacing:0.4px;text-transform:uppercase;color:#9a7a26;margin-bottom:3px}
+    .typing-ind.staff-typing{align-items:center;gap:6px}
+    .typing-ind.staff-typing em{font-size:11.5px;color:var(--muted);font-style:normal;margin-right:4px}
+    .chat-hstatus.staff::before{background:var(--gold)}
+    #chat-btn.has-unread .pulse{background:var(--gold)}
+
+    /* STAFF CONSOLE (hidden; opened by the secret entrances) */
+    body.staff-open{overflow:hidden}
+    .staff-overlay{position:fixed;inset:0;z-index:10000;background:rgba(6,18,32,0.72);backdrop-filter:blur(6px);display:none;font-family:"Outfit",sans-serif}
+    .staff-overlay.open{display:flex}
+    .staff-login-wrap{margin:auto;padding:16px;width:100%;max-width:400px}
+    .staff-login{background:var(--white);border-radius:16px;padding:32px 28px;display:flex;flex-direction:column;gap:12px;box-shadow:0 24px 80px rgba(0,0,0,0.35)}
+    .staff-login-badge{width:44px;height:44px;border-radius:10px;background:var(--gold);color:var(--navy);font-weight:900;font-size:22px;display:flex;align-items:center;justify-content:center}
+    .staff-login h2{font-family:"Cormorant Garamond",serif;font-size:28px;color:var(--navy)}
+    .staff-sub{font-size:13.5px;color:var(--muted);margin-top:-6px}
+    .staff-login input,.staff-composer textarea{font:inherit;font-size:14px;border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;background:var(--off);color:var(--text);outline:none;width:100%}
+    .staff-login input:focus,.staff-composer textarea:focus{border-color:var(--blue)}
+    .staff-error{font-size:13px;color:#c0392b;min-height:18px}
+    .staff-btn{font:inherit;font-size:13.5px;font-weight:600;border-radius:8px;padding:10px 18px;cursor:pointer;border:1.5px solid transparent;transition:background 0.2s,opacity 0.2s;white-space:nowrap}
+    .staff-btn.primary{background:var(--blue);color:#fff}
+    .staff-btn.primary:hover{background:var(--mid)}
+    .staff-btn:disabled{opacity:0.5;cursor:wait}
+    .staff-btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,0.25)}
+    .staff-btn.ghost:hover{background:rgba(255,255,255,0.1)}
+    .staff-btn.ghost.dark{color:var(--blue);border-color:var(--blue)}
+    .staff-btn.ghost.dark:hover{background:var(--light)}
+    .staff-link{background:none;border:none;color:var(--muted);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline}
+    .staff-shell{margin:auto;width:min(1200px,100%);height:min(780px,100%);background:var(--white);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,0.35)}
+    @media(min-width:900px){.staff-shell{border-radius:16px;height:min(780px,calc(100% - 48px))}}
+    .staff-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 20px;background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}
+    .staff-brand{display:flex;align-items:center;gap:12px}
+    .staff-brand strong{display:block;font-size:16px}
+    .staff-cross{width:34px;height:34px;border-radius:8px;background:var(--gold);color:var(--navy);font-weight:900;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+    .staff-presence{font-size:12px;color:rgba(255,255,255,0.65);display:flex;align-items:center;gap:6px}
+    .staff-presence::before{content:"";width:7px;height:7px;border-radius:50%;background:#2ecc71}
+    .staff-top-actions{display:flex;align-items:center;gap:8px}
+    .staff-me{font-size:12.5px;color:rgba(255,255,255,0.7);margin-right:6px}
+    .staff-body{flex:1;display:grid;grid-template-columns:340px 1fr;min-height:0}
+    .staff-side{border-right:1px solid var(--border);display:flex;flex-direction:column;min-height:0;background:var(--off)}
+    .staff-filters{display:flex;gap:6px;padding:12px}
+    .staff-filter{font:inherit;font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:#fff;color:var(--muted);cursor:pointer}
+    .staff-filter.active{border-color:var(--blue);color:var(--blue);background:var(--light)}
+    .staff-list{flex:1;overflow-y:auto;padding:0 8px 12px;display:flex;flex-direction:column;gap:6px}
+    .staff-item{font:inherit;text-align:left;background:#fff;border:1.5px solid transparent;border-radius:10px;padding:11px 12px;cursor:pointer;display:flex;flex-direction:column;gap:5px;box-shadow:0 1px 3px rgba(10,31,53,0.06);color:var(--text)}
+    .staff-item:hover{border-color:var(--border)}
+    .staff-item.selected{border-color:var(--blue);background:#f4f9fd}
+    .staff-item-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13.5px}
+    .staff-time{font-size:11.5px;color:var(--muted)}
+    .staff-preview{font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .staff-tags{display:flex;flex-wrap:wrap;gap:5px;align-items:center}
+    .tag{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:0.3px}
+    .tag.urgent{background:#fdecea;color:#c0392b}
+    .tag.wants{background:#fff4d6;color:#8a6a12}
+    .tag.live{background:var(--light);color:var(--blue)}
+    .tag.bot{background:#eef1f4;color:#6b7c8c}
+    .staff-unread{margin-left:auto;min-width:20px;height:20px;padding:0 6px;border-radius:10px;background:#c0392b;color:#fff;font-size:11px;font-weight:700;display:inline-flex;align-items:center;justify-content:center}
+    .staff-empty{font-size:13px;color:var(--muted);padding:16px 8px;text-align:center}
+    .staff-main{display:flex;flex-direction:column;min-height:0}
+    .staff-thread-head{display:flex;align-items:center;gap:12px;padding:12px 18px;border-bottom:1px solid var(--border)}
+    .staff-thread-head:empty{display:none}
+    .staff-thread-title{flex:1;min-width:0}
+    .staff-thread-title strong{display:block;font-size:15px;color:var(--navy)}
+    .staff-thread-title span{font-size:12px;color:var(--muted)}
+    .staff-back{display:none;font:inherit;font-size:13px;font-weight:600;background:none;border:none;color:var(--blue);cursor:pointer;padding:4px 0}
+    .staff-thread{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;background:#f8fbfe}
+    .staff-placeholder{margin:auto;text-align:center;max-width:340px;color:var(--muted);font-size:13.5px;line-height:1.6}
+    .staff-placeholder strong{display:block;color:var(--navy);font-size:16px;margin-bottom:6px}
+    .staff-msg{max-width:72%;padding:9px 13px;border-radius:12px;font-size:13.5px;line-height:1.55;background:#fff;border:1px solid var(--border)}
+    .staff-msg.from-visitor{align-self:flex-start;border-bottom-left-radius:4px}
+    .staff-msg.from-bot{align-self:flex-end;background:#eef1f4;border-color:#e0e6ec;border-bottom-right-radius:4px;color:#3d4f60}
+    .staff-msg.from-staff{align-self:flex-end;background:var(--blue);border-color:var(--blue);color:#fff;border-bottom-right-radius:4px}
+    .staff-msg.from-staff a{color:#fff}
+    .staff-msg-meta{font-size:10.5px;font-weight:600;opacity:0.65;margin-bottom:2px}
+    .staff-sys{align-self:center;font-size:11.5px;color:var(--muted);background:var(--light);padding:4px 12px;border-radius:12px}
+    .staff-sys.error{background:#fdecea;color:#c0392b}
+    .staff-composer{display:flex;gap:10px;align-items:flex-end;padding:12px 16px;border-top:1px solid var(--border)}
+    .staff-composer textarea{resize:none;flex:1}
+    #staff-pill{position:fixed;left:20px;bottom:24px;z-index:9997;font:inherit;font-size:13px;font-weight:600;background:var(--navy);color:var(--gold2);border:1px solid rgba(201,168,76,0.5);padding:9px 16px;border-radius:24px;cursor:pointer;box-shadow:0 6px 20px rgba(10,31,53,0.35)}
+    #staff-pill[data-count]:not([data-count=""])::after{content:attr(data-count);margin-left:8px;background:#c0392b;color:#fff;border-radius:10px;padding:1px 7px;font-size:11px}
+    #staff-pill.pulse-once{animation:pillPulse 0.9s ease 2}
+    @keyframes pillPulse{50%{transform:scale(1.08);box-shadow:0 0 0 8px rgba(201,168,76,0.25)}}
+    @media(max-width:899px){
+      .staff-body{grid-template-columns:1fr}
+      .staff-main{display:none}
+      .staff-body.thread-open .staff-side{display:none}
+      .staff-body.thread-open .staff-main{display:flex}
+      .staff-back{display:inline-block}
+      .staff-me{display:none}
+      .staff-msg{max-width:88%}
+      .staff-thread-head .staff-btn{padding:8px 12px;font-size:12.5px}
+    }
+
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+
+    @media(max-width:1024px){nav{padding:0 24px}.hero{grid-template-columns:1fr;padding:110px 28px 60px}.hero::after{display:none}.hero-left,.hero-right{padding:0}.hero-right{margin-top:40px}.about{grid-template-columns:1fr;gap:48px;padding:70px 28px}.services{padding:70px 28px}.svc-grid{grid-template-columns:1fr 1fr}.emerg{flex-direction:column;padding:40px 28px}.emerg-left{border-right:none;border-bottom:1px solid rgba(255,255,255,0.15);padding:0 0 32px}.emerg-right{padding:32px 0 0}.team{padding:70px 28px}.contact{padding:70px 28px}.contact-grid{grid-template-columns:1fr;gap:44px}footer{padding:48px 28px 24px}.foot-grid{grid-template-columns:1fr 1fr;gap:32px}}
+    @media(max-width:600px){.nav-links{display:none}.stats-grid{grid-template-columns:1fr 1fr}.svc-grid{grid-template-columns:1fr}.card-stack{grid-template-columns:1fr}.foot-grid{grid-template-columns:1fr}#chat-win{width:calc(100vw - 32px);right:16px;bottom:94px}}
+  </style>
+</head>
+<body>
+
+<!-- Line icons (stroke-based, inherit currentColor) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-ribbon" viewBox="0 0 24 24"><path d="M12 2a4 4 0 0 0-4 4c0 2.5 2 5.5 4 8 2-2.5 4-5.5 4-8a4 4 0 0 0-4-4z"/><path d="M9.5 11.5 5 21l3-1 2 2 2-6.5"/><path d="M14.5 11.5 19 21l-3-1-2 2-2-6.5"/></symbol>
+    <symbol id="i-gut" viewBox="0 0 24 24"><path d="M9 3v4a3 3 0 0 0 3 3h3a4 4 0 0 1 0 8h-1a3 3 0 0 1-3-3v-1a2 2 0 0 0-4 0v1a7 7 0 0 0 7 7h1a8 8 0 0 0 0-16"/></symbol>
+    <symbol id="i-scalpel" viewBox="0 0 24 24"><path d="M21 3 9 15"/><path d="M9 15c-1.5 1.5-4 2.5-6 3 .5-2 1.5-4.5 3-6l9-9a3 3 0 0 1 4 0 3 3 0 0 1 0 4"/><path d="m12 12 3 3"/></symbol>
+    <symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6"/><path d="M10 3v6L4.5 18.5A2 2 0 0 0 6.2 21.5h11.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7 15h10"/></symbol>
+    <symbol id="i-scan" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><circle cx="12" cy="12" r="4"/><path d="M12 8v8M8 12h8" opacity=".5"/></symbol>
+    <symbol id="i-siren" viewBox="0 0 24 24"><path d="M7 18v-6a5 5 0 0 1 10 0v6"/><path d="M5 21h14v-3H5z"/><path d="M12 3v2M4.2 6.2l1.4 1.4M19.8 6.2l-1.4 1.4M2 12h2M20 12h2"/></symbol>
+    <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v16"/><path d="M2 21h20"/><path d="M12 7v6M9 10h6"/><path d="M10 21v-4h4v4"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-award" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M8.2 13 7 22l5-3 5 3-1.2-9"/></symbol>
+    <symbol id="i-micro" viewBox="0 0 24 24"><path d="M6 18h8"/><path d="M3 22h18"/><path d="M14 22a7 7 0 1 0 0-14h-1"/><path d="M9 14h2"/><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2z"/><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/></symbol>
+    <symbol id="i-steth" viewBox="0 0 24 24"><path d="M5 3v6a5 5 0 0 0 10 0V3"/><path d="M10 14v2a5 5 0 0 0 10 0v-2"/><circle cx="20" cy="12" r="2"/><path d="M4 3h2M14 3h2"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+    <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/><path d="m9 16 2 2 4-4"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h4"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"/><path d="M3.2 12H8l1.5-3 3 6 1.5-3h6.8"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  </defs>
+</svg>
+
+<nav id="top-nav">
+  <a class="nav-logo" href="#home">
+    <div class="nav-cross">+</div>
+    <div class="nav-name">Grace <span>Life</span> Hospital</div>
+  </a>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#inside">Facilities</a></li>
+    <li><a href="#team">Our Team</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="tel:+19403477005" class="nav-cta"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>Call Now</a></li>
+  </ul>
+  <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-links">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<section class="hero" id="home">
+  <div class="hero-left">
+    <div class="hero-tag"><span class="live-dot" id="hero-open-dot"></span><span id="hero-open">Jonesboro, Arkansas - Est. 2010</span></div>
+    <h1>Healing with<br/><em>Grace</em> and<br/>Expertise</h1>
+    <p class="hero-desc">Grace Life Hospital delivers compassionate, world-class medical care from routine consultations to complex oncological surgery and emergency response.</p>
+    <div class="hero-btns">
+      <button type="button" class="btn btn-gold" data-ask="How do I book an appointment?"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg>Book a visit</button>
+      <a href="#services" class="btn btn-ghost">Our Services<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="hero-trust">
+      <div><strong data-count="15" data-suffix="+">15+</strong><span>Years in Jonesboro</span></div>
+      <div><strong data-count="50" data-suffix="+">50+</strong><span>Specialists</span></div>
+      <div><strong data-count="10" data-suffix="k+">10k+</strong><span>Patients treated</span></div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <figure class="hero-photo">
+      <img src="/img/surgery-team.jpg" alt="Surgical team in gowns and masks working together in an operating theatre" width="1024" height="683" fetchpriority="high"/>
+      <svg class="ecg" viewBox="0 0 600 80" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40h170l14-22 16 50 18-62 16 52 12-18h354"/></svg>
+    </figure>
+    <div class="float-card fc-er">
+      <span class="fc-ic red"><svg class="ic" aria-hidden="true"><use href="#i-siren"/></svg></span>
+      <div><strong>Emergency open 24/7</strong><span>Trauma &amp; critical care on standby</span></div>
+    </div>
+    <div class="float-card fc-chat">
+      <span class="fc-ic"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></span>
+      <div><strong>Questions? Ask us live</strong><span>Assistant + real staff in chat</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-inner">
+    <span>Oncology</span><span>Gastroenterology</span><span>General Surgery</span><span>Laboratory and Pathology</span><span>Diagnostic Imaging</span><span>Emergency Care</span><span>Nutritional Support</span><span>Cancer Treatment</span><span>Colonoscopy</span><span>Chemotherapy</span>
+    <span>Oncology</span><span>Gastroenterology</span><span>General Surgery</span><span>Laboratory and Pathology</span><span>Diagnostic Imaging</span><span>Emergency Care</span><span>Nutritional Support</span><span>Cancer Treatment</span><span>Colonoscopy</span><span>Chemotherapy</span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="fade-in">
+    <div class="eyebrow">Who We Are</div>
+    <h2 class="sec-h">A Hospital Built on Compassion and Excellence</h2>
+    <p class="sec-p">Grace Life Hospital is a full-service medical facility in the heart of Jonesboro, Arkansas, committed to providing evidence-based, patient-centered care across a wide range of medical disciplines.</p>
+    <p class="sec-p">Our multidisciplinary team collaborates across oncology, gastroenterology, surgical and diagnostic departments to ensure every patient receives the most effective treatment possible.</p>
+    <div class="feats">
+      <div class="feat"><div class="feat-ic"><svg class="ic" aria-hidden="true"><use href="#i-building"/></svg></div><div><div class="feat-title">Full-Service Medical Facility</div><div class="feat-text">State-of-the-art surgical theatres, ICU, diagnostic labs and ward facilities.</div></div></div>
+      <div class="feat"><div class="feat-ic"><svg class="ic" aria-hidden="true"><use href="#i-ribbon"/></svg></div><div><div class="feat-title">Oncology Centre of Excellence</div><div class="feat-text">Multidisciplinary cancer care from diagnosis through surgery and chemotherapy.</div></div></div>
+      <div class="feat"><div class="feat-ic"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg></div><div><div class="feat-title">HIPAA-Compliant and Confidential</div><div class="feat-text">All patient records and communications are fully protected and confidential.</div></div></div>
+    </div>
+  </div>
+  <div class="about-visual fade-in">
+    <img class="about-img" src="/img/imaging-mri.jpg" alt="A radiographer preparing a patient for an MRI scan in a bright imaging suite" width="1280" height="852" loading="lazy"/>
+    <div class="about-badge">
+      <svg class="ic" aria-hidden="true"><use href="#i-award"/></svg>
+      <div><strong data-count="10000" data-sep="1" data-suffix="+">10,000+</strong><span>patients treated with care</span></div>
+    </div>
+    <div class="about-mini">
+      <div><svg class="ic" aria-hidden="true"><use href="#i-micro"/></svg><span>On-site lab</span></div>
+      <div><svg class="ic" aria-hidden="true"><use href="#i-steth"/></svg><span>50+ physicians</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="services" id="services">
+  <div class="svc-head">
+    <div><div class="eyebrow">What We Offer</div><h2 class="sec-h">Our Medical Services</h2></div>
+    <p class="svc-intro">Comprehensive care delivered by experienced specialists using the latest medical technology. Tap any service to ask our assistant about it.</p>
+  </div>
+  <div class="svc-grid">
+    <button type="button" class="scard fade-in" data-ask="Tell me about your oncology services."><div class="scard-ic"><svg class="ic" aria-hidden="true"><use href="#i-ribbon"/></svg></div><div class="scard-title">Oncology</div><div class="scard-text">Diagnosis, surgical resection, chemotherapy and targeted therapy for colorectal, breast, lung and other cancers.</div><span class="scard-link">Ask about oncology<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></button>
+    <button type="button" class="scard fade-in" data-ask="Tell me about gastroenterology and colonoscopy."><div class="scard-ic"><svg class="ic" aria-hidden="true"><use href="#i-gut"/></svg></div><div class="scard-title">Gastroenterology</div><div class="scard-text">Colonoscopy, endoscopy, biopsy and complete digestive system care by certified gastroenterologists.</div><span class="scard-link">Ask about GI care<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></button>
+    <button type="button" class="scard fade-in" data-ask="Tell me about general surgery."><div class="scard-ic"><svg class="ic" aria-hidden="true"><use href="#i-scalpel"/></svg></div><div class="scard-title">General Surgery</div><div class="scard-text">Laparoscopic and open procedures in fully equipped operating theatres by our skilled surgical team.</div><span class="scard-link">Ask about surgery<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></button>
+    <button type="button" class="scard fade-in" data-ask="What lab tests and pathology do you offer?"><div class="scard-ic"><svg class="ic" aria-hidden="true"><use href="#i-flask"/></svg></div><div class="scard-title">Laboratory and Pathology</div><div class="scard-text">Full blood panels, tumor markers, coagulation profiles, biopsy analysis and rapid on-site reporting.</div><span class="scard-link">Ask about lab tests<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></button>
+    <button type="button" class="scard fade-in" data-ask="What imaging scans do you offer, like MRI and CT?"><div class="scard-ic"><svg class="ic" aria-hidden="true"><use href="#i-scan"/></svg></div><div class="scard-title">Diagnostic Imaging</div><div class="scard-text">CT scans, MRI, PET-CT, X-ray and ultrasound imaging with fast result turnaround.</div><span class="scard-link">Ask about imaging<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></button>
+    <a href="tel:+19403477005" class="scard scard-er fade-in"><div class="scard-ic"><svg class="ic" aria-hidden="true"><use href="#i-siren"/></svg></div><div class="scard-title">Emergency Care</div><div class="scard-text">24/7 emergency services with a dedicated trauma and critical care team always on standby.</div><span class="scard-link">Call the ER now<svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+  </div>
+</section>
+
+<section class="inside" id="inside">
+  <div class="inside-head">
+    <div class="eyebrow">Inside Grace Life</div>
+    <h2 class="sec-h">Modern Facilities, Human Care</h2>
+  </div>
+  <div class="bento">
+    <figure class="tile tile-big fade-in">
+      <img src="/img/imaging-mri.jpg" alt="MRI scanner suite with a patient on the scanning table" width="1280" height="852" loading="lazy"/>
+      <figcaption><strong>Advanced imaging suite</strong><span>MRI, CT and PET-CT with same-week appointments</span></figcaption>
+    </figure>
+    <figure class="tile fade-in">
+      <img src="/img/surgery-team.jpg" alt="Surgeons and a nurse working at an operating table" width="1024" height="683" loading="lazy"/>
+      <figcaption><strong>Operating theatres</strong><span>Laparoscopic and open surgery</span></figcaption>
+    </figure>
+    <figure class="tile fade-in">
+      <img src="/img/lab-samples.jpg" alt="Row of capped blood sample tubes in a rack" width="1024" height="683" loading="lazy"/>
+      <figcaption><strong>On-site laboratory</strong><span>Most blood results the same day</span></figcaption>
+    </figure>
+    <figure class="tile tile-wide fade-in">
+      <img src="/img/imaging-ct.jpg" alt="CT scanner ready for the next patient" width="1024" height="770" loading="lazy"/>
+      <figcaption><strong>CT scanning</strong><span>Fast, low-dose scans for diagnosis and emergency care</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="journey">
+  <div class="eyebrow">Your Visit</div>
+  <h2 class="sec-h">Four Simple Steps</h2>
+  <ol class="steps">
+    <li class="step fade-in"><span class="step-n">01</span><div class="step-ic"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></div><h3>Reach out</h3><p>Call, email, or ask our chat assistant. A real staff member can join the chat any time.</p></li>
+    <li class="step fade-in"><span class="step-n">02</span><div class="step-ic"><svg class="ic" aria-hidden="true"><use href="#i-cal"/></svg></div><h3>Book your slot</h3><p>Our front desk matches you with the right specialist and a time that works.</p></li>
+    <li class="step fade-in"><span class="step-n">03</span><div class="step-ic"><svg class="ic" aria-hidden="true"><use href="#i-clip"/></svg></div><h3>See your specialist</h3><p>Consultation, tests and imaging, often all on the same day, under one roof.</p></li>
+    <li class="step fade-in"><span class="step-n">04</span><div class="step-ic"><svg class="ic" aria-hidden="true"><use href="#i-heart"/></svg></div><h3>Recover with support</h3><p>A clear treatment plan, follow-ups and nutritional support while you heal.</p></li>
+  </ol>
+</section>
+
+<div class="emerg">
+  <div class="emerg-left">
+    <div class="emerg-label"><span class="live-dot red"></span>Emergency Services</div>
+    <div class="emerg-title">Need Immediate Medical Attention?</div>
+    <p class="emerg-text">Our emergency team is available around the clock. Do not wait — call us immediately for urgent care and assistance.</p>
+  </div>
+  <div class="emerg-right">
+    <div class="emerg-label">24/7 Emergency Line</div>
+    <a class="emerg-num" href="tel:+19403477005">+1 (940) 347-7005</a>
+    <div class="emerg-sub">Always available - Central Time</div>
+  </div>
+</div>
+
+<section class="team" id="team">
+  <div class="eyebrow">Our Physicians</div>
+  <h2 class="sec-h">Meet Our Specialists</h2>
+  <p class="sec-p">Our board-certified physicians bring decades of combined experience across oncology, gastroenterology, surgery and more.</p>
+  <div class="docs">
+    <article class="doc fade-in" style="--hue:205">
+      <div class="doc-av has-photo"><img src="/img/dr-cole.jpg" alt="" width="400" height="400" loading="lazy"/><svg class="ic doc-badge"><use href="#i-gut"/></svg></div>
+      <h3 class="doc-name">Dr. Michael Cole</h3><div class="doc-spec">Gastroenterology and Oncology</div>
+      <button type="button" class="doc-book" data-ask="I'd like to book an appointment with Dr. Michael Cole.">Book with Dr. Cole</button>
+    </article>
+    <article class="doc fade-in" style="--hue:280">
+      <div class="doc-av has-photo"><img src="/img/dr-marsh.jpg" alt="" width="400" height="400" loading="lazy"/><svg class="ic doc-badge"><use href="#i-micro"/></svg></div>
+      <h3 class="doc-name">Dr. Evelyn Marsh</h3><div class="doc-spec">Senior Histopathologist</div>
+      <button type="button" class="doc-book" data-ask="Tell me about Dr. Evelyn Marsh and pathology services.">Ask about pathology</button>
+    </article>
+    <article class="doc fade-in" style="--hue:170">
+      <div class="doc-av has-photo"><img src="/img/dr-reid.jpg" alt="" width="400" height="400" loading="lazy"/><svg class="ic doc-badge"><use href="#i-scalpel"/></svg></div>
+      <h3 class="doc-name">Dr. James Reid</h3><div class="doc-spec">Surgical Oncology</div>
+      <button type="button" class="doc-book" data-ask="I'd like to book an appointment with Dr. James Reid.">Book with Dr. Reid</button>
+    </article>
+    <article class="doc fade-in" style="--hue:30">
+      <div class="doc-av has-photo"><img src="/img/dr-brooks.jpg" alt="" width="400" height="400" loading="lazy"/><svg class="ic doc-badge"><use href="#i-heart"/></svg></div>
+      <h3 class="doc-name">Dr. Angela Brooks</h3><div class="doc-spec">Anaesthesiology</div>
+      <button type="button" class="doc-book" data-ask="Tell me about Dr. Angela Brooks and anaesthesia before surgery.">Ask about anaesthesia</button>
+    </article>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="eyebrow">Find Us</div>
+  <h2 class="sec-h">Contact and Location</h2>
+  <div class="contact-grid">
+    <div class="ci-list">
+      <div class="ci"><div class="ci-ic"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg></div><div><div class="ci-label">Address</div><div class="ci-val">Jones St, Jonesboro<br/>AR 72401, United States</div></div></div>
+      <div class="ci"><div class="ci-ic"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg></div><div><div class="ci-label">Phone</div><div class="ci-val"><a href="tel:+19403477005">+1 (940) 347-7005</a></div><div class="ci-note">Emergency line - available 24/7</div></div></div>
+      <div class="ci"><div class="ci-ic"><svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg></div><div><div class="ci-label">Email</div><div class="ci-val"><a href="mailto:gracelifehospital21@gmail.com">gracelifehospital21@gmail.com</a></div></div></div>
+      <div class="ci"><div class="ci-ic"><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg></div><div><div class="ci-label">Hours (Central Time) <span class="open-pill" id="contact-open"></span></div><div class="ci-val">Mon - Fri: 7:00 AM - 8:00 PM<br/>Saturday: 8:00 AM - 5:00 PM<br/>Emergency: 24/7</div></div></div>
+      <a href="https://maps.google.com/?q=Jones+St,+Jonesboro,+AR+72401" target="_blank" rel="noopener" class="btn btn-gold" style="width:fit-content;margin-top:4px;"><svg class="ic" aria-hidden="true"><use href="#i-pin"/></svg>Get Directions</a>
+    </div>
+    <div>
+      <div class="map-box">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3239.87!2d-90.69430!3d35.84230!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87d37b5dea3db60b%3A0xbe5c8eeed059e8dd!2sJones%20St%2C%20Jonesboro%2C%20AR%2072401%2C%20USA!5e0!3m2!1sen!2sus!4v1699000000000!5m2!1sen!2sus" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Grace Life Hospital Location"></iframe>
+      </div>
+      <div class="map-cap">Jones St, Jonesboro, AR 72401, United States</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-grid">
+    <div>
+      <div class="foot-logo">Grace <span>Life</span> Hospital</div>
+      <p class="foot-desc">Providing compassionate, expert medical care to the Jonesboro, Arkansas community since 2010. Your health and dignity are our highest priority.</p>
+      <div class="foot-badge"><svg class="ic" aria-hidden="true"><use href="#i-shield"/></svg>HIPAA Compliant and Confidential</div>
+    </div>
+    <div class="foot-col"><h4>Services</h4><ul><li><a href="#services">Oncology</a></li><li><a href="#services">Gastroenterology</a></li><li><a href="#services">General Surgery</a></li><li><a href="#services">Laboratory</a></li><li><a href="#services">Imaging</a></li><li><a href="#services">Emergency Care</a></li></ul></div>
+    <div class="foot-col"><h4>Hospital</h4><ul><li><a href="#about">About Us</a></li><li><a href="#inside">Facilities</a></li><li><a href="#team">Our Doctors</a></li><li><a href="#contact">Contact</a></li></ul></div>
+    <div class="foot-col"><h4>Contact</h4><ul><li><a href="https://maps.google.com/?q=Jones+St,+Jonesboro,+AR+72401" target="_blank" rel="noopener">Jones St, Jonesboro, AR 72401</a></li><li><a href="tel:+19403477005">+1 (940) 347-7005</a></li><li><a href="mailto:gracelifehospital21@gmail.com">gracelifehospital21@gmail.com</a></li><li><a href="#contact">Mon-Fri: 7AM-8PM CT</a></li></ul></div>
+  </div>
+  <div class="foot-bottom">
+    <div class="foot-copy"><span id="year">2026</span> Grace Life Hospital. All rights reserved. Jones St, Jonesboro, AR 72401</div>
+    <div class="foot-hipaa">Patient records protected under HIPAA Privacy Rule</div>
+  </div>
+  <p class="foot-credits"><strong>Grace Life Hospital is a fictional hospital created for a student project.</strong> Doctor portraits are illustrative.<br/>Photos:
+    <a href="https://www.flickr.com/photos/32257842@N05/7559803292" target="_blank" rel="noopener">"Clean colors" by Zdenko Zivkovic</a> (CC BY 2.0) ·
+    <a href="https://commons.wikimedia.org/w/index.php?curid=66017860" target="_blank" rel="noopener">MRI scanner by Mos.ru</a> (CC BY 4.0) ·
+    <a href="https://www.flickr.com/photos/53133240@N00/16253634266" target="_blank" rel="noopener">"CAT scanner" by Muffet</a> (CC BY 2.0) ·
+    <a href="https://www.flickr.com/photos/93755244@N00/3945656390" target="_blank" rel="noopener">"Test tubes" by Håkan Dahlström</a> (CC BY 2.0)
+  </p>
+</footer>
+
+<!-- CHAT BUTTON -->
+<button id="chat-btn" type="button" aria-label="Chat with us" aria-controls="chat-win" aria-expanded="false">
+  <div class="pulse"></div>
+  <svg class="ic-chat" width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+  <svg class="ic-close" width="24" height="24" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+</button>
+
+<!-- CHAT WINDOW -->
+<div id="chat-win" role="dialog" aria-label="Grace Life Hospital chat" aria-hidden="true">
+  <div class="chat-head">
+    <div class="chat-av" aria-hidden="true">&#127973;</div>
+    <div style="flex:1;min-width:0">
+      <div class="chat-hname">Grace Life Hospital</div>
+      <div class="chat-hstatus" id="chat-mode">Instant answers</div>
+      <div class="chat-clinic" id="chat-clinic"></div>
+    </div>
+    <button id="chat-reset" type="button" class="chat-reset" aria-label="Start a new conversation" title="New conversation">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M17.65 6.35A7.96 7.96 0 0 0 12 4a8 8 0 1 0 7.73 10h-2.08A6 6 0 1 1 12 6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></svg>
+    </button>
+  </div>
+  <div class="chat-msgs" id="msgs" role="log" aria-live="polite"></div>
+  <div class="qrs" id="qrs"></div>
+  <div class="chat-foot">
+    <input id="chat-input" type="text" placeholder="Type your message..." aria-label="Message" autocomplete="off"/>
+    <button id="send-btn" type="button" aria-label="Send message">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+    </button>
+  </div>
+  <div class="chat-disclaimer">Automated assistant - not medical advice. In an emergency call 911.</div>
+</div>
+
+<script type="module" src="/js/client/main.js"></script>
+</body>
+</html>
