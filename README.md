@@ -23,6 +23,20 @@ npm start               # http://localhost:8080
 
 `ANTHROPIC_API_KEY` is optional. Without it, the chat runs on the built-in answers only.
 
+## Deploying on Vercel
+
+The page files are served by Vercel's CDN, and every `/api/*` request runs in one function, `api/[...path].js`. That function uses the same router as the local server. Serverless functions don't share memory, so on Vercel:
+
+- chats are stored in **Upstash Redis**
+- staff logins are signed cookies, so no server needs to remember them
+- live updates are fetched every couple of seconds instead of over a held-open connection
+
+Setup, once:
+
+1. In the Vercel dashboard, open the project, then **Storage → Create / Connect → Upstash (Redis)**, using the free plan. Connect it to the project; this adds the `KV_REST_API_URL` and `KV_REST_API_TOKEN` variables.
+2. In **Settings → Environment Variables**, add `ADMIN_PASSWORD` (8+ characters) and optionally `ANTHROPIC_API_KEY`.
+3. Redeploy. Open `https://<your-app>.vercel.app/api/health`, which should show `"storage":"redis"` and `"staff":true`.
+
 ## Staff console
 
 The console is hidden from visitors. To open the staff sign-in, do any of these:

@@ -1,17 +1,16 @@
 // Staff console API. Every route except login requires a staff session.
 
 import type { IncomingMessage, ServerResponse } from "node:http";
-import { LIMITS, type AdminEvent } from "../shared/protocol.js";
+import { LIMITS, type AdminUpdates } from "../shared/protocol.js";
 import {
-  checkPassword, clearedCookie, createSession, destroySession, sessionCookie, staffFor, staffLoginEnabled,
+  checkPassword, clearedCookie, createSession, sessionCookie, staffFor, staffLoginEnabled,
 } from "./auth.js";
-import { HttpError, clientIp, json, openSse, readJson, str } from "./http.js";
-import { addStaff, staffOnline, toVisitor } from "./live.js";
+import { HttpError, clientIp, json, readJson, str } from "./http.js";
 import { RateLimiter } from "./rate-limit.js";
-import { publicConversation, type ConversationStore } from "./store.js";
+import { addMessage, publicConversation, type ConversationStore, type Stored } from "./store.js";
 
 const loginLimiter = new RateLimiter({ windowMs: 15 * 60_000, max: 8 });
-const secureCookies = process.env.NODE_ENV === "production";
+const secureCookies = process.env.NODE_ENV === "production" || !!process.env.VERCEL;
 
 export function adminRoutes(store: ConversationStore) {
   function requireStaff(req: IncomingMessage) {
@@ -19,10 +18,17 @@ export function adminRoutes(store: ConversationStore) {
     if (!s) throw new HttpError(401, "unauthorized");
     return s;
   }
-  function conversation(id: string) {
-    const c = store.get(id);
+  async function conversation(id: string) {
+    const c = await store.get(id);
     if (!c) throw new HttpError(404, "not_found");
     return c;
+  }
+  /** Staff join: the bot goes quiet and the visitor sees who joined. */
+  function join(c: Stored, name: string): void {
+    c.mode = "human";
+    c.staffName = name;
+    c.wantsHuman = false;
+    addMessage(c, "system", `${name} from Grace Life Hospital joined the chat.`);
   }
 
   return {
@@ -33,100 +39,93 @@ export function adminRoutes(store: ConversationStore) {
       const name = str(body.name, 40) ?? "Staff";
       const password = typeof body.password === "string" ? body.password : "";
       if (!checkPassword(password)) throw new HttpError(401, "invalid_credentials");
-      const token = createSession(name);
-      json(res, 200, { name }, { "Set-Cookie": sessionCookie(token, secureCookies) });
+      await store.db.touchStaff(name);
+      json(res, 200, { name }, { "Set-Cookie": sessionCookie(createSession(name), secureCookies) });
     },
 
-    logout(req: IncomingMessage, res: ServerResponse) {
-      destroySession(req);
+    logout(_req: IncomingMessage, res: ServerResponse) {
       json(res, 200, { ok: true }, { "Set-Cookie": clearedCookie() });
     },
 
-    me(req: IncomingMessage, res: ServerResponse) {
-      json(res, 200, { name: requireStaff(req).name, staffOnline: staffOnline() });
+    async me(req: IncomingMessage, res: ServerResponse) {
+      const staff = requireStaff(req);
+      await store.db.touchStaff(staff.name);
+      json(res, 200, { name: staff.name, staffOnline: await store.db.staffOnline() });
     },
 
-    list(req: IncomingMessage, res: ServerResponse) {
+    async list(req: IncomingMessage, res: ServerResponse) {
       requireStaff(req);
-      json(res, 200, store.list());
+      json(res, 200, await store.list());
     },
 
-    get(req: IncomingMessage, res: ServerResponse, id: string) {
+    /** Polled by the console: changed conversations + who's online. */
+    async updates(req: IncomingMessage, res: ServerResponse, since: number) {
+      const staff = requireStaff(req);
+      await store.db.touchStaff(staff.name);
+      const conversations = await store.list(since);
+      const body: AdminUpdates = {
+        staffOnline: await store.db.staffOnline(),
+        conversations,
+        cursor: conversations.reduce((m, c) => Math.max(m, c.updatedAt), since),
+      };
+      json(res, 200, body);
+    },
+
+    async get(req: IncomingMessage, res: ServerResponse, id: string) {
       requireStaff(req);
-      json(res, 200, publicConversation(conversation(id)));
+      json(res, 200, publicConversation(await conversation(id)));
     },
 
     /** Staff reply. The first reply takes the chat over from the bot. */
     async reply(req: IncomingMessage, res: ServerResponse, id: string) {
       const staff = requireStaff(req);
-      const c = conversation(id);
       const body = (await readJson(req)) as { text?: unknown };
       const text = str(body.text, LIMITS.maxChars);
       if (!text) throw new HttpError(400, "bad_request");
-
+      const c = await conversation(id);
       if (c.mode !== "human" || c.staffName !== staff.name) join(c, staff.name);
-      const message = store.append(c, "staff", text, staff.name);
-      store.update(c, { unread: 0 });
-      toVisitor(c.id, { type: "message", message });
+      const message = addMessage(c, "staff", text, staff.name);
+      c.unread = 0;
+      await store.db.putConv(c);
+      await store.db.clearTyping(id);
       json(res, 201, message);
     },
 
     /** Take over without saying anything yet. */
-    takeover(req: IncomingMessage, res: ServerResponse, id: string) {
+    async takeover(req: IncomingMessage, res: ServerResponse, id: string) {
       const staff = requireStaff(req);
-      const c = conversation(id);
-      if (c.mode !== "human" || c.staffName !== staff.name) join(c, staff.name);
-      json(res, 200, { ok: true });
-    },
-
-    /** Hand the chat back to the bot. */
-    release(req: IncomingMessage, res: ServerResponse, id: string) {
-      const staff = requireStaff(req);
-      const c = conversation(id);
-      if (c.mode === "human") {
-        store.setMode(c, "bot", null);
-        const note = store.append(c, "system", `${staff.name} left the chat. The virtual assistant is back.`);
-        toVisitor(c.id, { type: "message", message: note });
-        toVisitor(c.id, { type: "mode", mode: "bot", staffName: null });
+      const c = await conversation(id);
+      if (c.mode !== "human" || c.staffName !== staff.name) {
+        join(c, staff.name);
+        await store.db.putConv(c);
       }
       json(res, 200, { ok: true });
     },
 
-    read(req: IncomingMessage, res: ServerResponse, id: string) {
-      requireStaff(req);
-      store.update(conversation(id), { unread: 0 });
-      json(res, 200, { ok: true });
-    },
-
-    typing(req: IncomingMessage, res: ServerResponse, id: string) {
+    /** Hand the chat back to the bot. */
+    async release(req: IncomingMessage, res: ServerResponse, id: string) {
       const staff = requireStaff(req);
-      toVisitor(conversation(id).id, { type: "typing", staffName: staff.name });
+      const c = await conversation(id);
+      if (c.mode === "human") {
+        c.mode = "bot";
+        c.staffName = null;
+        addMessage(c, "system", `${staff.name} left the chat. The virtual assistant is back.`);
+        await store.db.putConv(c);
+      }
       json(res, 200, { ok: true });
     },
 
-    live(req: IncomingMessage, res: ServerResponse) {
+    async read(req: IncomingMessage, res: ServerResponse, id: string) {
       requireStaff(req);
-      const ch = openSse<AdminEvent>(req, res);
-      const unsubscribe = store.subscribe((e) => {
-        if (e.type === "message") {
-          ch.send({ type: "message", conversationId: e.conversation.id, message: e.message });
-        } else {
-          const { messages: _m, ...summary } = publicConversation(e.conversation);
-          ch.send({ type: "conversation", summary });
-        }
-      });
-      const leave = addStaff(ch);
-      req.on("close", () => {
-        unsubscribe();
-        leave();
-      });
+      const c = await conversation(id);
+      if (c.unread > 0) await store.update(c, { unread: 0 });
+      json(res, 200, { ok: true });
+    },
+
+    async typing(req: IncomingMessage, res: ServerResponse, id: string) {
+      const staff = requireStaff(req);
+      await store.db.setTyping(id, staff.name);
+      json(res, 200, { ok: true });
     },
   };
-
-  function join(c: ReturnType<typeof conversation>, name: string): void {
-    store.setMode(c, "human", name);
-    const note = store.append(c, "system", `${name} from Grace Life Hospital joined the chat.`);
-    toVisitor(c.id, { type: "message", message: note });
-    toVisitor(c.id, { type: "mode", mode: "human", staffName: name });
-  }
 }

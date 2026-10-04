@@ -65,7 +65,7 @@ class StaffConsole {
   private selected: string | null = null;
   private thread: Message[] = [];
   private filter: Filter = "all";
-  private live: EventSource | null = null;
+  private live: { close(): void } | null = null;
   private staffOnline = 0;
   private lastTypingPing = 0;
   private readonly baseTitle = document.title;
@@ -164,23 +164,34 @@ class StaffConsole {
     const list = await api.list();
     this.convos = new Map(list.map((c) => [c.id, c]));
     this.renderList();
-    this.connect();
+    this.connect(list);
   }
 
-  private connect(): void {
+  private connect(known: ConversationSummary[]): void {
     this.live?.close();
     this.live = api.live(
       (e) => this.onEvent(e),
       () => {
-        // EventSource retries by itself; if the session expired, go back to sign-in.
-        void api.me().catch(() => {
-          this.live?.close();
-          this.live = null;
-          this.me = null;
-          this.renderLogin("Your session ended. Please sign in again.");
-        });
+        this.live = null;
+        this.me = null;
+        this.renderLogin("Your session ended. Please sign in again.");
       },
+      known,
     );
+  }
+
+  /** Pulls the open chat's full transcript and appends anything new. */
+  private async syncThread(id: string): Promise<void> {
+    try {
+      const full = await api.get(id);
+      if (this.selected !== id) return;
+      // Re-render the whole thread so messages always show in server order.
+      this.thread = full.messages;
+      this.threadEl.replaceChildren(...this.thread.map((m) => this.threadMessage(m)));
+      this.threadEl.scrollTop = this.threadEl.scrollHeight;
+    } catch {
+      /* next poll will retry */
+    }
   }
 
   private renderShell(): void {
@@ -387,16 +398,14 @@ class StaffConsole {
         this.convos.set(e.summary.id, viewing ? { ...e.summary, unread: 0 } : e.summary);
         if (viewing && e.summary.unread > 0) void api.read(e.summary.id);
         this.renderList();
-        if (e.summary.id === this.selected) this.renderThreadHead(this.convos.get(e.summary.id)!);
+        if (e.summary.id === this.selected) {
+          this.renderThreadHead(this.convos.get(e.summary.id)!);
+          if ((e.summary.last?.at ?? 0) > (this.thread.at(-1)?.at ?? 0)) void this.syncThread(e.summary.id);
+        }
         if (isNew) pulsePill();
         break;
       }
       case "message":
-        if (e.conversationId === this.selected && !this.thread.some((m) => m.id === e.message.id)) {
-          this.thread.push(e.message);
-          this.threadEl.append(this.threadMessage(e.message));
-          this.threadEl.scrollTop = this.threadEl.scrollHeight;
-        }
         if (e.message.from === "visitor") this.alertNewMessage(e.conversationId, e.message);
         break;
     }

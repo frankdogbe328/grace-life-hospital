@@ -1,4 +1,4 @@
-import type { AdminEvent, Conversation, ConversationSummary, Message } from "../../shared/protocol.js";
+import type { AdminEvent, AdminUpdates, Conversation, ConversationSummary, Message } from "../../shared/protocol.js";
 
 export class ApiError extends Error {
   constructor(readonly status: number, readonly code: string) {
@@ -29,16 +29,49 @@ export const api = {
   release: (id: string) => call<{ ok: true }>("POST", `/conversations/${id}/release`),
   read: (id: string) => call<{ ok: true }>("POST", `/conversations/${id}/read`),
   typing: (id: string) => call<{ ok: true }>("POST", `/conversations/${id}/typing`),
-  live(onEvent: (e: AdminEvent) => void, onDown: () => void): EventSource {
-    const es = new EventSource("/api/admin/live");
-    es.onmessage = (m: MessageEvent<string>) => {
+  /**
+   * Polls for changed conversations and presence, turned into AdminEvents.
+   * Polling (not a held-open connection) so it works on serverless hosts.
+   * Calls onSignedOut if the session is no longer valid.
+   */
+  live(onEvent: (e: AdminEvent) => void, onSignedOut: () => void, known: ConversationSummary[]): { close(): void } {
+    let cursor = known.reduce((m, c) => Math.max(m, c.updatedAt), 0);
+    const lastAt = new Map(known.map((c) => [c.id, c.last?.at ?? 0]));
+    let online = -1;
+    let stopped = false;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+
+    const tick = async () => {
       try {
-        onEvent(JSON.parse(m.data) as AdminEvent);
-      } catch {
-        /* ignore */
+        const u = await call<AdminUpdates>("GET", `/updates?since=${cursor}`);
+        cursor = Math.max(cursor, u.cursor);
+        if (u.staffOnline !== online) {
+          online = u.staffOnline;
+          onEvent({ type: "presence", staffOnline: online });
+        }
+        for (const summary of u.conversations) {
+          onEvent({ type: "conversation", summary });
+          const last = summary.last;
+          if (last && last.at > (lastAt.get(summary.id) ?? 0)) {
+            lastAt.set(summary.id, last.at);
+            onEvent({ type: "message", conversationId: summary.id, message: last });
+          }
+        }
+      } catch (e) {
+        if (e instanceof ApiError && e.status === 401) {
+          stopped = true;
+          onSignedOut();
+          return;
+        }
       }
+      if (!stopped) timer = setTimeout(tick, document.hidden ? 5000 : 2000);
     };
-    es.onerror = onDown;
-    return es;
+    timer = setTimeout(tick, 1000);
+    return {
+      close() {
+        stopped = true;
+        clearTimeout(timer);
+      },
+    };
   },
 };

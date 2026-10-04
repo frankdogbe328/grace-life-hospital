@@ -86,7 +86,17 @@ export function cookies(req: IncomingMessage): Record<string, string> {
   return out;
 }
 
+// Behind a tunnel or host proxy every request comes from the proxy's address,
+// so rate limits would be shared by all visitors. TRUST_PROXY=1 reads the
+// client address the proxy forwards instead.
+const trustProxy = process.env.TRUST_PROXY === "1";
+
 export function clientIp(req: IncomingMessage): string {
+  if (trustProxy) {
+    const fwd = req.headers["x-forwarded-for"];
+    const first = (Array.isArray(fwd) ? fwd[0] : fwd)?.split(",")[0]?.trim();
+    if (first) return first;
+  }
   return req.socket.remoteAddress ?? "unknown";
 }
 

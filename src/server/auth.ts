@@ -1,8 +1,12 @@
 // Staff login. The "secret button" on the site only hides the door; this is
 // the lock: a server-checked password and an httpOnly session cookie that page
 // scripts can't read.
+//
+// Sessions are signed tokens (name + expiry + HMAC), not server memory, so any
+// serverless instance can verify them. Changing ADMIN_PASSWORD (or
+// SESSION_SECRET) signs everyone out.
 
-import { createHash, randomBytes, timingSafeEqual } from "node:crypto";
+import { createHash, createHmac, timingSafeEqual } from "node:crypto";
 import type { IncomingMessage } from "node:http";
 import { cookies } from "./http.js";
 
@@ -14,8 +18,8 @@ interface Session {
   expires: number;
 }
 
-const sessions = new Map<string, Session>();
 const password = process.env.ADMIN_PASSWORD ?? "";
+const secret = process.env.SESSION_SECRET || createHash("sha256").update(`glh-session:${password}`).digest("hex");
 
 export function staffLoginEnabled(): boolean {
   return password.length >= 8;
@@ -29,28 +33,31 @@ export function checkPassword(attempt: string): boolean {
   return timingSafeEqual(a, b);
 }
 
-export function createSession(name: string): string {
-  const token = randomBytes(32).toString("base64url");
-  sessions.set(token, { name, expires: Date.now() + SESSION_TTL_MS });
-  return token;
+function sign(payload: string): string {
+  return createHmac("sha256", secret).update(payload).digest("base64url");
 }
 
-export function destroySession(req: IncomingMessage): void {
-  const token = cookies(req)[SESSION_COOKIE];
-  if (token) sessions.delete(token);
+export function createSession(name: string): string {
+  const payload = Buffer.from(JSON.stringify({ name, expires: Date.now() + SESSION_TTL_MS })).toString("base64url");
+  return `${payload}.${sign(payload)}`;
 }
 
 /** The logged-in staff member for this request, or null. */
 export function staffFor(req: IncomingMessage): Session | null {
+  if (!staffLoginEnabled()) return null;
   const token = cookies(req)[SESSION_COOKIE];
   if (!token) return null;
-  const s = sessions.get(token);
-  if (!s) return null;
-  if (Date.now() > s.expires) {
-    sessions.delete(token);
+  const [payload, sig] = token.split(".");
+  if (!payload || !sig) return null;
+  const expected = Buffer.from(sign(payload));
+  const given = Buffer.from(sig);
+  if (expected.length !== given.length || !timingSafeEqual(expected, given)) return null;
+  try {
+    const s = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as Session;
+    return typeof s.name === "string" && typeof s.expires === "number" && Date.now() < s.expires ? s : null;
+  } catch {
     return null;
   }
-  return s;
 }
 
 export function sessionCookie(token: string, secure: boolean): string {
